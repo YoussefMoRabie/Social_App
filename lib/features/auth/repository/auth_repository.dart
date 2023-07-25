@@ -6,6 +6,7 @@ import 'package:social_app/core/common/firebase_constants.dart';
 import 'package:social_app/core/core.dart';
 import 'package:social_app/core/providers/firebase_providers.dart';
 import 'package:social_app/models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(
     ref: ref,
@@ -29,6 +30,7 @@ class AuthRepository {
       _firebaseFirestore.collection(FirebaseConstants.userCollection);
 
   Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();
+  Uuid uuid = const Uuid();
 
   //sign in
   FutureEither<UserModel> signIn(String email, String password) async {
@@ -48,10 +50,15 @@ class AuthRepository {
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       UserModel user = UserModel(
-          name: userCredential.user!.displayName ?? "",
-          profilePic: userCredential.user!.photoURL ?? "",
-          uid: userCredential.user!.uid,
-          score: 0);
+        name: userCredential.user!.displayName ?? "",
+        profilePic: userCredential.user!.photoURL ?? "",
+        uid: userCredential.user!.uid,
+        followers: [],
+        following: [],
+        key: uuid.v1(),
+        validityOfKey: 2,
+        score: 0,
+      );
       await _users.doc(userCredential.user!.uid).set(user.toMap());
       return right(user);
     } catch (e) {
