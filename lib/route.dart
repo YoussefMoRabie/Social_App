@@ -3,6 +3,8 @@ import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
 
+import 'features/auth/controller/auth_controller.dart';
+import 'features/auth/screens/show_login_or_signup.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/timeline/screens/post_screen.dart';
 import 'features/timeline/screens/timeline_screen.dart';
@@ -18,6 +20,10 @@ final goRouteProvider = Provider<GoRouter>((ref) {
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
     routes: [
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const ShowLoginOrSignup(),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           // the UI shell
@@ -30,7 +36,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                 GoRoute(
                   path: '/timeline',
                   pageBuilder: (context, state) =>
-                       NoTransitionPage(child: TimelineScreen()),
+                      NoTransitionPage(child: TimelineScreen()),
                   routes: [
                     GoRoute(
                       path: 'post/:id',
@@ -66,5 +72,19 @@ final goRouteProvider = Provider<GoRouter>((ref) {
         ],
       )
     ],
+    redirect: (context, state) {
+      final userLoggingIn = state.uri.toString() == '/login';
+       bool userIsLoggedIn = false;
+      final authStatus = ref.watch(authStateChangeProvider).whenData((value) {
+        userIsLoggedIn = value != null;
+      });
+      if (userLoggingIn && userIsLoggedIn) {
+        return '/timeline';
+      } else if (!userLoggingIn && !userIsLoggedIn) {
+        return '/login';
+      } else {
+        return null;
+      }
+    },
   );
 });

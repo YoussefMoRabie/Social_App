@@ -25,7 +25,7 @@ class _SignupScreenState extends State<SignupScreen> {
     WidgetRef ref,
   ) {
     if (_formKey.currentState!.validate()) {
-      ref.read(authControllerProvider).signUp(
+      ref.read(authControllerProvider.notifier).signUp(
           context, emailController.text.trim(), passController.text.trim());
     }
   }

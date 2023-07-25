@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:social_app/features/profile/screens/widgets/profile_menu_widget.dart';
 
 import '../../../theme/pallete.dart';
+import '../../auth/controller/auth_controller.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-
               /// -- IMAGE
               Stack(
                 children: [
@@ -23,7 +24,11 @@ class ProfileScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100), child: const Image(image: AssetImage("assets/p.jpg"),fit: BoxFit.cover,)),
+                        borderRadius: BorderRadius.circular(100),
+                        child: const Image(
+                          image: AssetImage("assets/p.jpg"),
+                          fit: BoxFit.cover,
+                        )),
                   ),
                   Positioned(
                     bottom: 0,
@@ -31,7 +36,9 @@ class ProfileScreen extends StatelessWidget {
                     child: Container(
                       width: 35,
                       height: 35,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: Palette.primary),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Palette.primary),
                       child: const Icon(
                         LineAwesomeIcons.alternate_pencil,
                         color: Colors.black,
@@ -42,8 +49,9 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text("Yousef Rabia", style: TextStyle(color: Palette.white,fontSize: 28)),
-              Text("Bio", style:  TextStyle(color: Palette.white)),
+              Text("Yousef Rabia",
+                  style: TextStyle(color: Palette.white, fontSize: 28)),
+              Text("Bio", style: TextStyle(color: Palette.white)),
               const SizedBox(height: 20),
 
               /// -- BUTTON
@@ -52,8 +60,11 @@ class ProfileScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Palette.primary, side: BorderSide.none, shape: const StadiumBorder()),
-                  child: const Text("Edit Profile", style: TextStyle(color: Palette.white)),
+                      backgroundColor: Palette.primary,
+                      side: BorderSide.none,
+                      shape: const StadiumBorder()),
+                  child: const Text("Edit Profile",
+                      style: TextStyle(color: Palette.white)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -61,19 +72,33 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               /// -- MENU
-              ProfileMenuWidget(title: "Settings", icon: LineAwesomeIcons.cog, onPress: () {}),
-              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
-              ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Settings",
+                  icon: LineAwesomeIcons.cog,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Billing Details",
+                  icon: LineAwesomeIcons.wallet,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "User Management",
+                  icon: LineAwesomeIcons.user_check,
+                  onPress: () {}),
               const Divider(),
               const SizedBox(height: 10),
-              ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),
               ProfileMenuWidget(
-                  title: "Logout",
-                  icon: LineAwesomeIcons.alternate_sign_out,
-                  textColor: Colors.red,
-                  endIcon: false,
-                  onPress: () {
-                  }),
+                  title: "Information",
+                  icon: LineAwesomeIcons.info,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                title: "Logout",
+                icon: LineAwesomeIcons.alternate_sign_out,
+                textColor: Colors.red,
+                endIcon: false,
+                onPress: () {
+                  ref.read(authControllerProvider.notifier).logout();
+                },
+              ),
             ],
           ),
         ),
