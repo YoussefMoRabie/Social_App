@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/theme/pallete.dart';
-import '../../../../theme/pallete.dart';
 
 class CustomSubmitButton extends StatelessWidget {
   const CustomSubmitButton(

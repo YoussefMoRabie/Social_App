@@ -21,13 +21,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         backgroundColor: Palette.background,
+        // backgroundColor: Colors.amber,
+        elevation: 0,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         indicatorColor: Colors.transparent,
-        
+
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: _goBranch,
         destinations: const [
@@ -35,7 +36,10 @@ class HomeScreen extends StatelessWidget {
             selectedIcon: ActiveIcon(
               icon: Icons.home_outlined,
             ),
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(
+              Icons.home_outlined,
+              color: Colors.grey,
+            ),
             label: "Profile",
           ),
           // NavigationDestination(
@@ -56,7 +60,10 @@ class HomeScreen extends StatelessWidget {
             selectedIcon: ActiveIcon(
               icon: Icons.person_outline,
             ),
-            icon: Icon(Icons.person_outline),
+            icon: Icon(
+              Icons.person_outline,
+              color: Colors.grey,
+            ),
             label: "Profile",
           ),
         ],

@@ -19,7 +19,7 @@ class ActiveIcon extends StatelessWidget {
         shape: BoxShape.circle,
         color: Palette.primary,
       ),
-      child: Icon(icon),
+      child: Icon(icon, color: Colors.white),
     );
   }
 }
