@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
     WidgetRef ref,
   ) {
     if (_formKey.currentState!.validate()) {
-      ref.read(authControllerProvider).signIn(
+      ref.read(authControllerProvider.notifier).signIn(
           context, emailController.text.trim(), passController.text.trim());
     }
   }

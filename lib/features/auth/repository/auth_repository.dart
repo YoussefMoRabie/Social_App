@@ -8,28 +8,34 @@ import 'package:social_app/core/providers/firebase_providers.dart';
 import 'package:social_app/models/user_model.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(
+    ref: ref,
     firebaseAuth: ref.read(authProvider),
     firebaseFirestore: ref.read(firestoreProvider)));
 
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
+  final Ref _ref;
 
-  AuthRepository(
-      {required FirebaseAuth firebaseAuth,
-      required FirebaseFirestore firebaseFirestore})
-      : _firebaseAuth = firebaseAuth,
-        _firebaseFirestore = firebaseFirestore;
+  AuthRepository({
+    required FirebaseAuth firebaseAuth,
+    required FirebaseFirestore firebaseFirestore,
+    required Ref ref,
+  })  : _firebaseAuth = firebaseAuth,
+        _firebaseFirestore = firebaseFirestore,
+        _ref = ref;
 
   CollectionReference get _users =>
       _firebaseFirestore.collection(FirebaseConstants.userCollection);
+
+  Stream<User?> get authStateChange => _firebaseAuth.authStateChanges();
 
   //sign in
   FutureEither<UserModel> signIn(String email, String password) async {
     try {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      UserModel user = await getUserData(userCredential.user!.uid);
+      UserModel user = await getUserData(userCredential.user!.uid).first;
       return right(user);
     } catch (e) {
       return left(Failure(e.toString()));
@@ -53,10 +59,13 @@ class AuthRepository {
     }
   }
 
-  Future<UserModel> getUserData(String uid) async {
-    final snapshot = await _users.doc(uid).get();
-    UserModel userModel =
-        UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
-    return userModel;
+  Stream<UserModel> getUserData(String uid) {
+    return _users.doc(uid).snapshots().map((event) {
+      return UserModel.fromMap(event.data() as Map<String, dynamic>);
+    });
+  }
+
+  void logout() async {
+    await _firebaseAuth.signOut();
   }
 }
