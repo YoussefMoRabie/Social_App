@@ -22,7 +22,7 @@ class ScreenToggleButton extends StatelessWidget {
           onPressed: onPressed,
           style: TextButton.styleFrom(
             // backgroundColor: Pallete.primary,
-            foregroundColor: Pallete.primary,
+            foregroundColor: Palette.primary,
           ),
           child: Text(
             buttonLabel,
