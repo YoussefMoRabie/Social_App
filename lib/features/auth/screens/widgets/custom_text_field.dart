@@ -2,6 +2,10 @@
 
 // import '../../../../theme/pallete.dart';
 
+import 'package:flutter/material.dart';
+
+import '../../../../theme/pallete.dart';
+
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
       {super.key,
@@ -29,7 +33,7 @@ class CustomTextField extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           height: MediaQuery.of(context).size.height * 0.07,
           decoration: BoxDecoration(
-            color: Pallete.surface,
+            color: Palette.surface,
             borderRadius: BorderRadius.circular(20),
           ),
         ),
@@ -46,10 +50,10 @@ class CustomTextField extends StatelessWidget {
               prefixIcon: icon != null
                   ? Icon(
                       icon,
-                      color: Pallete.white.withOpacity(0.5),
+                      color: Palette.white.withOpacity(0.5),
                     )
                   : null,
-              focusColor: Pallete.white,
+              focusColor: Palette.white,
               hintText: hintText,
               border: InputBorder.none,
             ),

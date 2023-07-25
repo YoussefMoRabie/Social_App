@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:social_app/theme/pallete.dart';
+import '../../../../theme/pallete.dart';
 
 class CustomSubmitButton extends StatelessWidget {
   const CustomSubmitButton(
@@ -11,7 +12,7 @@ class CustomSubmitButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          backgroundColor: Pallete.primary,
+          backgroundColor: Palette.primary,
           minimumSize: const Size(double.infinity, 50)),
       onPressed: onPressed,
       child: Text(
