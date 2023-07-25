@@ -8,17 +8,17 @@ class Pallete {
   static const Color white = Color(0xffffffff);
 
   static var darkModeAppTheme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: background,
-    cardColor: surface,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: background,
-      iconTheme: IconThemeData(
-        color: white,
+      scaffoldBackgroundColor: background,
+      cardColor: surface,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: background,
+        iconTheme: IconThemeData(
+          color: white,
+        ),
       ),
-    ),
-    drawerTheme: const DrawerThemeData(
-      backgroundColor: surface,
-    ),
-    primaryColor: primary,
-  );
+      drawerTheme: const DrawerThemeData(
+        backgroundColor: surface,
+      ),
+      primaryColor: primary,
+      useMaterial3: true);
 }
