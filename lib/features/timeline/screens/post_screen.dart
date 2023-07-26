@@ -26,34 +26,27 @@ class PostScreen extends ConsumerWidget {
                   data: (PostModel post) {
                     return ref.watch(commentsByPostIdProvider(post.id)).when(
                           data: (comments) {
-                            return Stack(
-                              children: [
-                                ListView.builder(
-                                  padding: EdgeInsets.only(
-                                      top: MediaQuery.of(context).size.height *
-                                          0.27),
-                                  shrinkWrap: true,
-                                  itemCount: comments.length,
-                                  itemBuilder: (context, index) {
-                                    return Comment(comment: comments[index]);
-                                  },
-                                ),
-                                Container(
-                                  color: Palette.background,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Post(
-                                        post: post,
-                                      ),
-                                      const Divider(
-                                        color: Palette.surface,
-                                        thickness: 2,
-                                      ),
-                                    ],
+                            return SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Post(
+                                    post: post,
                                   ),
-                                )
-                              ],
+                                  const Divider(
+                                    color: Palette.surface,
+                                    thickness: 2,
+                                  ),
+                                  ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: comments.length,
+                                    itemBuilder: (context, index) {
+                                      return Comment(comment: comments[index]);
+                                    },
+                                  ),
+                                ],
+                              ),
                             );
                           },
                           loading: () => const Center(child: Loader()),
