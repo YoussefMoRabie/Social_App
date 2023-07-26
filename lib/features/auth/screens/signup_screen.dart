@@ -26,12 +26,8 @@ class _SignupScreenState extends State<SignupScreen> {
     WidgetRef ref,
   ) {
     if (_formKey.currentState!.validate()) {
-      context.goNamed("verify", queryParameters: {
-        "email": emailController.text.trim(),
-        "pass": passController.text.trim()
-      });
-      // ref.read(authControllerProvider.notifier).signUp(
-      //     context, emailController.text.trim(), passController.text.trim());
+      ref.read(authControllerProvider.notifier).signUp(
+          context, emailController.text.trim(), passController.text.trim());
     }
   }
 
