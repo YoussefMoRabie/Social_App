@@ -4,3 +4,4 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authProvider = Provider((ref) => FirebaseAuth.instance);
 final firestoreProvider = Provider((ref) => FirebaseFirestore.instance);
+final curr = Provider((ref) => FirebaseAuth.instance.currentUser);
