@@ -16,6 +16,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passController = TextEditingController();
   final passConfirmationController = TextEditingController();
@@ -28,6 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).signUp(
           context,
+          usernameController.text.trim(),
           emailController.text.trim(),
           passController.text.trim(),
           keyController.text.trim());
@@ -63,6 +65,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        CustomTextField(
+                          controller: usernameController,
+                          validator: (p0) => usernameValidator(p0),
+                          icon: Icons.person,
+                          hintText: "Name",
+                          keyboardType: TextInputType.name,
+                        ),
                         const SizedBox(
                           height: 30,
                         ),

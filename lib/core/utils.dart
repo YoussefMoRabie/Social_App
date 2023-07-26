@@ -12,6 +12,13 @@ String? emailValidator(String? value) {
   return null;
 }
 
+String? usernameValidator(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter your name';
+  }
+  return null;
+}
+
 Future<FilePickerResult?> pickImage() async {
   final image = await FilePicker.platform.pickFiles(
     type: FileType.image,
