@@ -47,7 +47,7 @@ class AuthRepository {
 
   //sign up
   FutureEither<UserModel> signUp(
-      String email, String password, String key) async {
+      String name , String email, String password, String key) async {
     try {
       //First: look for a friend who has this key
       final foundUser =
@@ -61,7 +61,7 @@ class AuthRepository {
         UserCredential userCredential = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
         UserModel user = UserModel(
-          name: userCredential.user!.displayName ?? "",
+          name: userCredential.user!.displayName ?? name,
           profilePic: userCredential.user!.photoURL ?? "",
           uid: userCredential.user!.uid,
           followers: [],
