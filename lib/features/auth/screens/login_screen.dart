@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_app/core/core.dart';
-import 'package:social_app/features/auth/screens/widgets/custom_submit_button.dart';
-import 'package:social_app/features/auth/screens/widgets/custom_text_field.dart';
 import 'package:social_app/features/auth/screens/widgets/screen_toggle_button.dart';
+import '../../../core/common/custom_submit_button.dart';
+import '../../../core/common/custom_text_field.dart';
 import '../controller/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {

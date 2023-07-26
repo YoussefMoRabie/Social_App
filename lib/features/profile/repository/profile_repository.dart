@@ -11,7 +11,5 @@ class ProfileRepository {
   ProfileRepository({required UserModel currentUser})
       : _currentUser = currentUser;
 
-  void updateProfile() {
-    print(_currentUser.uid);
-  }
+  void updateProfile() {}
 }

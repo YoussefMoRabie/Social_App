@@ -46,6 +46,12 @@ class Post extends ConsumerWidget {
           .addComment(context: context, postId: post.id, file: image);
     }
 
+    void likePost(BuildContext context, WidgetRef ref) async {
+      ref
+          .read(timelineControllerProvider.notifier)
+          .likePost(context: context, post: post);
+    }
+
     return InkWell(
       onTap: !outside! ? null : () => navgaiteToPostPage(post.id),
       child: Container(
@@ -123,9 +129,16 @@ class Post extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(
-                            Icons.favorite_border_outlined,
-                            color: Colors.grey,
+                          IconButton(
+                            icon: post.likes
+                                    .contains(ref.read(userProvider)!.uid)
+                                ? const Icon(Icons.favorite)
+                                : const Icon(Icons.favorite_border_outlined),
+                            color:
+                                post.likes.contains(ref.read(userProvider)!.uid)
+                                    ? Palette.primary
+                                    : Colors.grey,
+                            onPressed: () => likePost(context, ref),
                           ),
                           const SizedBox(
                             width: 5,
