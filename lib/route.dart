@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_app/features/chatting/contact_screen.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
+import 'package:social_app/models/user_model.dart';
 
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/screens/show_login_or_signup.dart';
@@ -14,8 +17,13 @@ final _shellNavigatorTimelineKey =
     GlobalKey<NavigatorState>(debugLabel: 'timeline');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
+ final _shellNavigatorcontactKey =
+    GlobalKey<NavigatorState>(debugLabel: 'contact');
 
 final goRouteProvider = Provider<GoRouter>((ref) {
+  User? m = FirebaseAuth.instance.currentUser;
+  UserModel mm = UserModel(
+      name: m!.emailVerified.toString(), profilePic: '', uid: m!.uid, score: 0);
   return GoRouter(
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
@@ -30,7 +38,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
           return HomeScreen(navigationShell: navigationShell);
         },
         branches: [
-          StatefulShellBranch(
+        StatefulShellBranch(
               navigatorKey: _shellNavigatorTimelineKey,
               routes: [
                 GoRoute(
@@ -49,6 +57,26 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                 ),
               ]),
           StatefulShellBranch(
+            navigatorKey: _shellNavigatorcontactKey,
+            routes: [
+              GoRoute(
+                  path: '/contact',
+                  builder: (context, state) {
+                    return ContactScreen(user: mm,);
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'post/:id',
+                      builder: (context, state) {
+                        final id = state.pathParameters['id']!;
+                        return PostScreen(
+                          id: id,
+                        );
+                      },
+                    ),
+                  ]),
+            ],
+          ),     StatefulShellBranch(
             navigatorKey: _shellNavigatorProfileKey,
             routes: [
               GoRoute(
@@ -74,7 +102,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
     ],
     redirect: (context, state) {
       final userLoggingIn = state.uri.toString() == '/login';
-       bool userIsLoggedIn = false;
+      bool userIsLoggedIn = false;
       final authStatus = ref.watch(authStateChangeProvider).whenData((value) {
         userIsLoggedIn = value != null;
       });

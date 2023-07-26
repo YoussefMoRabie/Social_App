@@ -56,6 +56,16 @@ class HomeScreen extends StatelessWidget {
           //   icon: Icon(Icons.chat_outlined),
           //   label: "Chat",
           // ),
+           NavigationDestination(
+            selectedIcon: ActiveIcon(
+              icon: Icons.message,
+            ),
+            icon: Icon(
+              Icons.message,
+              color: Colors.grey,
+            ),
+            label: "Contact",
+          ),
           NavigationDestination(
             selectedIcon: ActiveIcon(
               icon: Icons.person_outline,
