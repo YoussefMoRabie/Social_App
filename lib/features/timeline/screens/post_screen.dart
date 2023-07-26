@@ -19,47 +19,102 @@ class PostScreen extends ConsumerWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          scrolledUnderElevation: 0.0,
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ref.watch(postByIdProvider(id)).when(
-                    data: (PostModel post) {
-                      return Column(
-                        children: [
-                          Post(
-                            post: post,
-                          ),
-                          Divider(
-                            color: Palette.surface,
-                            thickness: 2,
-                          ),
-                          ref.watch(commentsByPostIdProvider(post.id)).when(
-                                data: (comments) {
-                                  return ListView.builder(
-                                    shrinkWrap: true,
-                                    itemCount: comments.length,
-                                    itemBuilder: (context, index) {
-                                      return Comment(comment: comments[index]);
-                                    },
-                                  );
-                                },
-                                loading: () => const Center(child: Loader()),
-                                error: (error, stack) => const Center(
-                                  child: Text("Error"),
+            child: ref.watch(postByIdProvider(id)).when(
+                  data: (PostModel post) {
+                    return ref.watch(commentsByPostIdProvider(post.id)).when(
+                          data: (comments) {
+                            return Stack(
+                              children: [
+                                ListView.builder(
+                                  padding: EdgeInsets.only(
+                                      top: MediaQuery.of(context).size.height *
+                                          0.27),
+                                  shrinkWrap: true,
+                                  itemCount: comments.length,
+                                  itemBuilder: (context, index) {
+                                    return Comment(comment: comments[index]);
+                                  },
                                 ),
-                              ),
-                        ],
-                      );
-                    },
-                    loading: () => const Center(child: Loader()),
-                    error: (error, stack) => const Center(
-                      child: Text("Error"),
-                    ),
+                                Container(
+                                  color: Palette.background,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Post(
+                                        post: post,
+                                      ),
+                                      const Divider(
+                                        color: Palette.surface,
+                                        thickness: 2,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+                          loading: () => const Center(child: Loader()),
+                          error: (error, stack) => const Center(
+                            child: Text("Error"),
+                          ),
+                        );
+                  },
+                  loading: () => const Center(child: Loader()),
+                  error: (error, stack) => const Center(
+                    child: Text("Error"),
                   ),
-            ],
-          ),
-        )));
+                )));
   }
 }
+
+
+
+  // return Scaffold(
+  //       appBar: AppBar(
+  //         elevation: 0,
+  //         backgroundColor: Colors.transparent,
+  //       ),
+  //       body: SafeArea(
+  //           child: SingleChildScrollView(
+  //         child: Column(
+  //           children: [
+  //             ref.watch(postByIdProvider(id)).when(
+  //                   data: (PostModel post) {
+  //                     return Column(
+  //                       children: [
+  //                         Post(
+  //                           post: post,
+  //                         ),
+  //                         Divider(
+  //                           color: Palette.surface,
+  //                           thickness: 2,
+  //                         ),
+  //                         ref.watch(commentsByPostIdProvider(post.id)).when(
+  //                               data: (comments) {
+  //                                 return ListView.builder(
+  //                                   shrinkWrap: true,
+  //                                   itemCount: comments.length,
+  //                                   itemBuilder: (context, index) {
+  //                                     return Comment(comment: comments[index]);
+  //                                   },
+  //                                 );
+  //                               },
+  //                               loading: () => const Center(child: Loader()),
+  //                               error: (error, stack) => const Center(
+  //                                 child: Text("Error"),
+  //                               ),
+  //                             ),
+  //                       ],
+  //                     );
+  //                   },
+  //                   loading: () => const Center(child: Loader()),
+  //                   error: (error, stack) => const Center(
+  //                     child: Text("Error"),
+  //                   ),
+  //                 ),
+  //           ],
+  //         ),
+  //       )));
