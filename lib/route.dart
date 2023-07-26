@@ -49,7 +49,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                     GoRoute(
                       path: 'post',
                       builder: (context, state) {
-                        return  SendPostSreen();
+                        return SendPostSreen();
                       },
                     ),
                   ],

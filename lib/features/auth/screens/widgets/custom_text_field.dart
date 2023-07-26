@@ -40,13 +40,14 @@ class CustomTextField extends StatelessWidget {
         Positioned(
           top: 8,
           left: 10, //0 is starting at left, use it to give left-margin
-          right: 0,
+          right: 10,
           child: TextFormField(
             controller: controller,
             keyboardType: keyboardType,
             style: const TextStyle(fontSize: 18),
             obscureText: isPassword ?? false,
             decoration: InputDecoration(
+              // isDense: true,
               prefixIcon: icon != null
                   ? Icon(
                       icon,

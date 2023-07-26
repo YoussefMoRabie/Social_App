@@ -84,7 +84,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Consumer(
                     builder: (context, ref, child) => CustomSubmitButton(
-                      label: "Log In",
+                      label: ref.watch(authControllerProvider)
+                          ? const Loader(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              "Login",
+                              style: TextStyle(color: Colors.white),
+                            ),
                       onPressed: () => _submitForm(ref),
                     ),
                   ),
