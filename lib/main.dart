@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:social_app/features/chatting/contact_screen.dart';
+import 'package:social_app/features/chatting/screens/contact_screen.dart';
 import 'package:social_app/firebase_options.dart';
 import 'package:social_app/theme/pallete.dart';
 import 'package:social_app/route.dart';

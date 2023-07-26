@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/user_model.dart';
-import '../../theme/pallete.dart';
-import 'Widgets/message_textfield.dart';
-import 'Widgets/single_message.dart';
+import '../../../models/user_model.dart';
+import '../../../theme/pallete.dart';
+import '../Widgets/message_textfield.dart';
+import '../Widgets/single_message.dart';
 
 class ChatScreen extends StatelessWidget {
   final UserModel currentUser;

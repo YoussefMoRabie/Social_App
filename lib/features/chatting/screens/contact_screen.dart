@@ -3,25 +3,28 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/user_model.dart';
-import '../../theme/pallete.dart';
+import '../../../models/user_model.dart';
+import '../../../theme/pallete.dart';
+import '../../auth/controller/auth_controller.dart';
 import 'Search_screen..dart';
 import 'chatting_screen.dart';
 
 
 
-class ContactScreen extends StatefulWidget {
-  UserModel user;
+class ContactScreen extends ConsumerStatefulWidget {
 
-  ContactScreen({super.key, required this.user});
+
+  ContactScreen({super.key});
   @override
-  _ContactScreenState createState() => _ContactScreenState();
+  ConsumerState<ContactScreen> createState() => _ContactScreenState();
 }
 
-class _ContactScreenState extends State<ContactScreen> {
+class _ContactScreenState extends  ConsumerState<ContactScreen>{
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider)!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Contact'),
@@ -31,7 +34,7 @@ class _ContactScreenState extends State<ContactScreen> {
       ),
 
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('users').doc(widget.user.uid).collection('messages').snapshots(),
+        stream: FirebaseFirestore.instance.collection('users').doc(user.uid).collection('messages').snapshots(),
         builder: (context,AsyncSnapshot snapshot){
           if(snapshot.hasData){
             if(snapshot.data.docs.length < 1){
@@ -65,7 +68,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         ),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(
-                            currentUser: widget.user,
+                            currentUser: user,
                              friendId: friend['uid'],
                               friendName: friend['name'],
                                friendImage: friend['profilePic'])));
@@ -84,7 +87,7 @@ class _ContactScreenState extends State<ContactScreen> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.search),
         onPressed: (){
-           Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(widget.user)));
+           Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(user)));
         },
       ),
       

@@ -2,8 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/user_model.dart';
-import '../../theme/pallete.dart';
+import '../../../models/user_model.dart';
+import '../../../theme/pallete.dart';
 import 'chatting_screen.dart';
 
 
@@ -21,49 +21,12 @@ class _SearchScreenState extends State<SearchScreen> {
   bool isLoading = false;
 
    
-// Future<List<Map>> accessUserData() async {
-//    setState(() {
-//       searchResult = [];
-//       isLoading = true;
-//     });
- 
-//     QuerySnapshot<Map<String, dynamic>> snapshot =
-//         await FirebaseFirestore.instance.collection('users').get();
-//     if (snapshot.docs.isNotEmpty) {
-//       for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
-//         Map<String, dynamic> userData = doc.data();
-//         UserModel user = UserModel(
-//           name: userData['name'],
-//           profilePic: userData['profilePic'],
-//           uid: userData['uid'],
-//           score: userData['score'],
-//         );
-//       searchResult.add(userData);
-//       }
-//     } else {
-//         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User Found")));
-//             setState(() {
-//       isLoading = false;
-//     });
-//     }
-  
-//   return searchResult;
-// }
-
-  void onSearch()async{
-   UserModel m= UserModel(name: 'Wedayn', profilePic: '', uid: '099', score: 0, followers: [], following: [], key: '', validityOfKey: 0);
-   setState(() {
-     searchResult.add(m.toMap());
-        isLoading = true;
-   });
-   
-    // setState(() {
-    //   searchResult = [];
-    //   isLoading = true;
-    // });
-    
-     
-    await FirebaseFirestore.instance.collection('users').where("email",isEqualTo: searchController.text).get().then((value){
+ void onSearch()async{
+    setState(() {
+      searchResult = [];
+      isLoading = true;
+    });
+    await FirebaseFirestore.instance.collection('users').where("name",isEqualTo: searchController.text).get().then((value){
        if(value.docs.length < 1){
          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User Found")));
             setState(() {
@@ -72,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return;
        }
        value.docs.forEach((user) {
-          if(user.data()['uid'] != widget.user.uid){
+          if(user.data()['name'] != widget.user.name){
                searchResult.add(user.data());
           }
         });
@@ -81,6 +44,41 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     });
   }
+  
+//   return searchResult;
+// }
+
+  // void onSearch()async{
+  //  UserModel m= UserModel(name: 'Wedayn', profilePic: '', uid: '099', score: 0, followers: [], following: [], key: '', validityOfKey: 0);
+  //  setState(() {
+  //    searchResult.add(m.toMap());
+  //       isLoading = true;
+  //  });
+   
+  //   // setState(() {
+  //   //   searchResult = [];
+  //   //   isLoading = true;
+  //   // });
+    
+     
+  //   await FirebaseFirestore.instance.collection('users').where("email",isEqualTo: searchController.text).get().then((value){
+  //      if(value.docs.length < 1){
+  //        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User Found")));
+  //           setState(() {
+  //     isLoading = false;
+  //   });
+  //   return;
+  //      }
+  //      value.docs.forEach((user) {
+  //         if(user.data()['uid'] != widget.user.uid){
+  //              searchResult.add(user.data());
+  //         }
+  //       });
+  //    setState(() {
+  //     isLoading = false;
+  //   });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
