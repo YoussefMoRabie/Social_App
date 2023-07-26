@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -8,15 +9,17 @@ class PostModel {
   final String createdAt;
   final String userId;
   final List<String> likes;
-  final List<String> comments;
+  final int commentCount;
   PostModel({
     required this.id,
     required this.content,
     required this.createdAt,
     required this.userId,
     required this.likes,
-    required this.comments,
+    required this.commentCount,
   });
+
+   
 
   PostModel copyWith({
     String? id,
@@ -24,7 +27,7 @@ class PostModel {
     String? createdAt,
     String? userId,
     List<String>? likes,
-    List<String>? comments,
+    int? commentCount,
   }) {
     return PostModel(
       id: id ?? this.id,
@@ -32,7 +35,7 @@ class PostModel {
       createdAt: createdAt ?? this.createdAt,
       userId: userId ?? this.userId,
       likes: likes ?? this.likes,
-      comments: comments ?? this.comments,
+      commentCount: commentCount ?? this.commentCount,
     );
   }
 
@@ -43,7 +46,7 @@ class PostModel {
       'createdAt': createdAt,
       'userId': userId,
       'likes': likes,
-      'comments': comments,
+      'commentCount': commentCount,
     };
   }
 
@@ -53,42 +56,40 @@ class PostModel {
       content: map['content'] as String,
       createdAt: map['createdAt'] as String,
       userId: map['userId'] as String,
-      likes: List<String>.from(map['likes'] as List<String>),
-      comments: List<String>.from(
-        (map['comments'] as List<String>),
-      ),
+      likes: List<String>.from((map['likes'] as List<dynamic>)),
+      commentCount: map['commentCount'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PostModel.fromJson(String source) =>
-      PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory PostModel.fromJson(String source) => PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PostModel(id: $id, content: $content, createdAt: $createdAt, userId: $userId, likes: $likes, comments: $comments)';
+    return 'PostModel(id: $id, content: $content, createdAt: $createdAt, userId: $userId, likes: $likes, commentCount: $commentCount)';
   }
 
   @override
   bool operator ==(covariant PostModel other) {
     if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.content == content &&
-        other.createdAt == createdAt &&
-        other.userId == userId &&
-        listEquals(other.likes, likes) &&
-        listEquals(other.comments, comments);
+  
+    return 
+      other.id == id &&
+      other.content == content &&
+      other.createdAt == createdAt &&
+      other.userId == userId &&
+      listEquals(other.likes, likes) &&
+      other.commentCount == commentCount;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        content.hashCode ^
-        createdAt.hashCode ^
-        userId.hashCode ^
-        likes.hashCode ^
-        comments.hashCode;
+      content.hashCode ^
+      createdAt.hashCode ^
+      userId.hashCode ^
+      likes.hashCode ^
+      commentCount.hashCode;
   }
 }

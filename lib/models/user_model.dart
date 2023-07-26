@@ -62,8 +62,8 @@ class UserModel {
       profilePic: map['profilePic'] as String,
       uid: map['uid'] as String,
       score: map['score'] as int,
-      followers: List<String>.from((map['followers'] as List<String>)),
-      following: List<String>.from((map['following'] as List<String>)),
+      followers: List<String>.from((map['followers'] as List<dynamic>)),
+      following: List<String>.from((map['following'] as List<dynamic>)),
       validityOfKey: map['validityOfKey'] as int,
       key: map['key'] as String,
     );
