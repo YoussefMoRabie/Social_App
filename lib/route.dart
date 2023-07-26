@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_app/features/chatting/contact_screen.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
 import 'package:social_app/features/timeline/screens/send_post.dart';
 
@@ -9,14 +11,21 @@ import 'features/auth/screens/show_login_or_signup.dart';
 import 'features/profile/screens/profile_screen.dart';
 import 'features/timeline/screens/post_screen.dart';
 import 'features/timeline/screens/timeline_screen.dart';
+import 'models/user_model.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorTimelineKey =
     GlobalKey<NavigatorState>(debugLabel: 'timeline');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
+    final _shellNavigatorContactKey =
+    GlobalKey<NavigatorState>(debugLabel: 'contact');
 
 final goRouteProvider = Provider<GoRouter>((ref) {
+
+  User? m = FirebaseAuth.instance.currentUser;
+  UserModel mm = UserModel(
+      name: 'w', profilePic: '', uid: '000', score: 0, followers: [], following: [], key: '9999', validityOfKey: 2);
   return GoRouter(
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
@@ -55,6 +64,27 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                   ],
                 ),
               ]),
+               StatefulShellBranch(
+            navigatorKey: _shellNavigatorContactKey,
+            routes: [
+              GoRoute(
+                  path: '/contact',
+                  builder: (context, state) {
+                    return  ContactScreen(user: mm,);
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'post/:id',
+                      builder: (context, state) {
+                        final id = state.pathParameters['id']!;
+                        return PostScreen(
+                          id: id,
+                        );
+                      },
+                    ),
+                  ]),
+            ],
+          ),
           StatefulShellBranch(
             navigatorKey: _shellNavigatorProfileKey,
             routes: [
