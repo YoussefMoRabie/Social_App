@@ -36,9 +36,10 @@ class Post extends ConsumerWidget {
     void pickReaction(BuildContext context, WidgetRef ref) async {
       final res = await pickImage();
       File? image;
-      if (res != null) {
-        image = File(res.files.first.path!);
+      if (res == null) {
+        return;
       }
+      image = File(res.files.first.path!);
 
       // ignore: use_build_context_synchronously
       ref
