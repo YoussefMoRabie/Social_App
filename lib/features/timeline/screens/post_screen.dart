@@ -16,6 +16,7 @@ class PostScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("rebuild");
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
