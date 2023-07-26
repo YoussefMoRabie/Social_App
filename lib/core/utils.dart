@@ -67,3 +67,21 @@ String? keyValidator(String? key) {
   }
   return null;
 }
+
+double getPostPadding(String post) {
+  int pad = (post.length / 35).ceil();
+  switch (pad) {
+    case 1:
+      return 0.25;
+    case 2:
+      return 0.27;
+    case 3:
+      return 0.29;
+    case 4:
+      return 0.31;
+    case 5:
+      return 0.33;
+    default:
+      return 0.35;
+  }
+}

@@ -6,6 +6,7 @@ import 'package:social_app/features/timeline/screens/widgets/post.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/theme/pallete.dart';
 
+import '../../../core/utils.dart';
 import '../controller/timeline_controller.dart';
 
 class PostScreen extends ConsumerWidget {
@@ -26,27 +27,34 @@ class PostScreen extends ConsumerWidget {
                   data: (PostModel post) {
                     return ref.watch(commentsByPostIdProvider(post.id)).when(
                           data: (comments) {
-                            return SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Post(
-                                    post: post,
+                            return Stack(
+                              children: [
+                                ListView.builder(
+                                  padding: EdgeInsets.only(
+                                    top: MediaQuery.of(context).size.height * getPostPadding(post.content),
                                   ),
-                                  const Divider(
-                                    color: Palette.surface,
-                                    thickness: 2,
+                                  shrinkWrap: true,
+                                  itemCount: comments.length,
+                                  itemBuilder: (context, index) {
+                                    return Comment(comment: comments[index]);
+                                  },
+                                ),
+                                Container(
+                                  color: Palette.background,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Post(
+                                        post: post,
+                                      ),
+                                      const Divider(
+                                        color: Palette.surface,
+                                        thickness: 2,
+                                      ),
+                                    ],
                                   ),
-                                  ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: comments.length,
-                                    itemBuilder: (context, index) {
-                                      return Comment(comment: comments[index]);
-                                    },
-                                  ),
-                                ],
-                              ),
+                                )
+                              ],
                             );
                           },
                           loading: () => const Center(child: Loader()),
