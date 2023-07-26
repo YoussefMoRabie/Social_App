@@ -25,6 +25,7 @@ final _shellNavigatorLeaderboardKey =
     GlobalKey<NavigatorState>(debugLabel: 'leaderboard');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
+<<<<<<< HEAD
 final _shellNavigatorContactKey =
     GlobalKey<NavigatorState>(debugLabel: 'contact');
 
@@ -39,6 +40,16 @@ final goRouteProvider = Provider<GoRouter>((ref) {
       following: [],
       key: '9999',
       validityOfKey: 2);
+=======
+    final _shellNavigatorContactKey =
+    GlobalKey<NavigatorState>(debugLabel: 'contact');
+
+final goRouteProvider = Provider<GoRouter>((ref) {
+
+  User? m = FirebaseAuth.instance.currentUser;
+  UserModel mm = UserModel(
+      name: 'w', profilePic: '', uid: '000', score: 0, followers: [], following: [], key: '9999', validityOfKey: 2);
+>>>>>>> 0e24eaf (added chatting)
   return GoRouter(
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
@@ -77,6 +88,27 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                   ],
                 ),
               ]),
+               StatefulShellBranch(
+            navigatorKey: _shellNavigatorContactKey,
+            routes: [
+              GoRoute(
+                  path: '/contact',
+                  builder: (context, state) {
+                    return  ContactScreen(user: mm,);
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'post/:id',
+                      builder: (context, state) {
+                        final id = state.pathParameters['id']!;
+                        return PostScreen(
+                          id: id,
+                        );
+                      },
+                    ),
+                  ]),
+            ],
+          ),
           StatefulShellBranch(
             navigatorKey: _shellNavigatorLeaderboardKey,
             routes: [
