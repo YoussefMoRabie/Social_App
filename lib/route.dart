@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
+import 'package:social_app/features/profile/screens/update_profile.dart';
 import 'package:social_app/features/timeline/screens/send_post.dart';
 
 import 'features/auth/controller/auth_controller.dart';
@@ -64,6 +65,12 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                     return const ProfileScreen();
                   },
                   routes: [
+                    GoRoute(
+                      path: 'update',
+                      builder: (context, state) {
+                        return const UpdateProfileScreen();
+                      },
+                    ),
                     GoRoute(
                       path: 'post/:id',
                       builder: (context, state) {

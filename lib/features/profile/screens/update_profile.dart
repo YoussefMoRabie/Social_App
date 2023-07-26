@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../theme/pallete.dart';
@@ -11,8 +11,11 @@ class UpdateProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
-        leading: IconButton(onPressed: () {}, icon: const Icon(LineAwesomeIcons.angle_left)),
+        leading: IconButton(
+            onPressed: () {
+              context.pop();
+            },
+            icon: const Icon(LineAwesomeIcons.angle_left)),
         title: const Text("Edit Profile", style: TextStyle()),
       ),
       body: SingleChildScrollView(
@@ -27,7 +30,10 @@ class UpdateProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage("assets/images/profile.jpg"),fit: BoxFit.cover,)),
+                        child: const Image(
+                          image: AssetImage("assets/images/profile.jpg"),
+                          fit: BoxFit.cover,
+                        )),
                   ),
                   Positioned(
                     bottom: 0,
@@ -35,9 +41,13 @@ class UpdateProfileScreen extends StatelessWidget {
                     child: Container(
                       width: 35,
                       height: 35,
-                      decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(100), color: Palette.secondary),
-                      child: IconButton(onPressed: () {  }, icon: Icon(LineAwesomeIcons.camera,size: 20), color: Colors.black),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Palette.secondary),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(LineAwesomeIcons.camera, size: 20),
+                          color: Colors.black),
                     ),
                   ),
                 ],
@@ -50,26 +60,30 @@ class UpdateProfileScreen extends StatelessWidget {
                   children: [
                     TextFormField(
                       decoration: const InputDecoration(
-                          label: Text("FullName"), prefixIcon: Icon(LineAwesomeIcons.user)),
+                          label: Text("FullName"),
+                          prefixIcon: Icon(LineAwesomeIcons.user)),
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
                       decoration: const InputDecoration(
-                          label: Text("Email"), prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
+                          label: Text("Email"),
+                          prefixIcon: Icon(LineAwesomeIcons.envelope_1)),
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
                       decoration: const InputDecoration(
-                          label: Text("PhoneNo"), prefixIcon: Icon(LineAwesomeIcons.phone)),
+                          label: Text("PhoneNo"),
+                          prefixIcon: Icon(LineAwesomeIcons.phone)),
                     ),
-                    const SizedBox(height:  10),
+                    const SizedBox(height: 10),
                     TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
                         label: const Text("Password"),
                         prefixIcon: const Icon(Icons.fingerprint),
-                        suffixIcon:
-                        IconButton(icon: const Icon(LineAwesomeIcons.eye_slash), onPressed: () {}),
+                        suffixIcon: IconButton(
+                            icon: const Icon(LineAwesomeIcons.eye_slash),
+                            onPressed: () {}),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -83,12 +97,11 @@ class UpdateProfileScreen extends StatelessWidget {
                             backgroundColor: Palette.primary,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text("Update Profile", style: TextStyle(color: Palette.white)),
+                        child: const Text("Update Profile",
+                            style: TextStyle(color: Palette.white)),
                       ),
                     ),
                     const SizedBox(height: 30),
-
-
                   ],
                 ),
               ),
