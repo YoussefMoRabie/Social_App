@@ -49,8 +49,11 @@ class Post extends ConsumerWidget {
 
     void likePost(BuildContext context, WidgetRef ref) async {
       ref
-          .read(timelineControllerProvider.notifier)
+          .watch(timelineControllerProvider.notifier)
           .likePost(context: context, post: post);
+
+      // ignore: unused_result
+      ref.refresh(postByIdProvider(post.id));
     }
 
     return InkWell(
