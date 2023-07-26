@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../../theme/pallete.dart';
+import '../../theme/pallete.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
