@@ -6,7 +6,6 @@ import 'package:social_app/features/timeline/screens/widgets/post.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/theme/pallete.dart';
 
-import '../../../core/utils.dart';
 import '../controller/timeline_controller.dart';
 
 class PostScreen extends ConsumerWidget {

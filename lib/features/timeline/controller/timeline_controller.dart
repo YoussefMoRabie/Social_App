@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_app/features/timeline/repository/timeline_repository.dart';
-import 'package:social_app/features/timeline/screens/widgets/post.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -67,7 +66,7 @@ class TimelineController extends StateNotifier<bool> {
     state = true;
     final user = _ref.read(userProvider);
     final userId = user!.uid;
-    final postId = Uuid().v4();
+    final postId = const Uuid().v4();
     final post = PostModel(
       id: postId,
       content: postText,
@@ -104,7 +103,7 @@ class TimelineController extends StateNotifier<bool> {
         ),
       ),
       (r) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Post Deleted"),
         ),
       ),
@@ -119,8 +118,8 @@ class TimelineController extends StateNotifier<bool> {
     state = true;
     final user = _ref.read(userProvider);
     final userId = user!.uid;
-    final username = user!.name;
-    final commentId = Uuid().v4();
+    final username = user.name;
+    final commentId = const Uuid().v4();
     final imageRes = await _storageRepository.storeFile(
       path: 'comments/$postId',
       id: postId,
@@ -168,7 +167,7 @@ class TimelineController extends StateNotifier<bool> {
         ),
       ),
       (r) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Comment Deleted"),
         ),
       ),

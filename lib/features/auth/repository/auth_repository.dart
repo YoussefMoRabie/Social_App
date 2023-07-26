@@ -5,6 +5,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:social_app/core/common/firebase_constants.dart';
 import 'package:social_app/core/core.dart';
 import 'package:social_app/core/providers/firebase_providers.dart';
+import 'package:social_app/core/types/key_exception.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -45,22 +46,36 @@ class AuthRepository {
   }
 
   //sign up
-  FutureEither<UserModel> signUp(String email, String password) async {
+  FutureEither<UserModel> signUp(
+      String email, String password, String key) async {
     try {
-      UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      UserModel user = UserModel(
-        name: userCredential.user!.displayName ?? "",
-        profilePic: userCredential.user!.photoURL ?? "",
-        uid: userCredential.user!.uid,
-        followers: [],
-        following: [],
-        key: uuid.v1(),
-        validityOfKey: 2,
-        score: 0,
-      );
-      await _users.doc(userCredential.user!.uid).set(user.toMap());
-      return right(user);
+      //First: look for a friend who has this key
+      final foundUser =
+          await _users.where("key", isEqualTo: key).limit(1).get();
+      UserModel friendData =
+          UserModel.fromMap(foundUser.docs[0].data() as Map<String, dynamic>);
+      if (friendData.validityOfKey > 0) {
+        friendData =
+            friendData.copyWith(validityOfKey: friendData.validityOfKey - 1);
+        _users.doc(friendData.uid).update(friendData.toMap());
+        UserCredential userCredential = await _firebaseAuth
+            .createUserWithEmailAndPassword(email: email, password: password);
+        UserModel user = UserModel(
+          name: userCredential.user!.displayName ?? "",
+          profilePic: userCredential.user!.photoURL ?? "",
+          uid: userCredential.user!.uid,
+          followers: [],
+          following: [],
+          key: uuid.v1(),
+          validityOfKey: 2,
+          score: 0,
+        );
+        await _users.doc(userCredential.user!.uid).set(user.toMap());
+        return right(user);
+      } else {
+        throw KeyException(
+            "This key is not valid, try to ask a friend to give you a key");
+      }
     } catch (e) {
       return left(Failure(e.toString()));
     }

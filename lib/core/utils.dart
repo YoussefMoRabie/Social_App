@@ -60,3 +60,10 @@ String? passConfirmValidator(String? value, String? enteredPass) {
   }
   return null;
 }
+
+String? keyValidator(String? key) {
+  if (key == null || key.isEmpty) {
+    return 'Please enter a key';
+  }
+  return null;
+}

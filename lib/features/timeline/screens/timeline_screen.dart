@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_app/core/core.dart';
-import 'package:social_app/features/timeline/screens/send_post.dart';
 import 'package:social_app/features/timeline/screens/widgets/post.dart';
 import 'package:social_app/theme/pallete.dart';
 
@@ -81,7 +80,7 @@ class TimelineScreen extends ConsumerWidget {
                             },
                           );
                         },
-                        error: (e, s) =>  Text('$s'),
+                        error: (e, s) => Text('$s'),
                         loading: () => const Loader(),
                       ),
                 ),

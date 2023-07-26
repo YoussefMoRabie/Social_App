@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:social_app/features/auth/screens/verfication_screen.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
 import 'package:social_app/features/timeline/screens/send_post.dart';
 
@@ -22,14 +21,6 @@ final goRouteProvider = Provider<GoRouter>((ref) {
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
     routes: [
-      GoRoute(
-          path: "/verify",
-          name: "verify",
-          builder: (context, state) {
-            final email = state.uri.queryParameters["email"];
-            final pass = state.uri.queryParameters["pass"];
-            return VerficationScreen(email: email!, password: pass!);
-          }),
       GoRoute(
         path: '/login',
         builder: (context, state) => const ShowLoginOrSignup(),
@@ -58,7 +49,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                     GoRoute(
                       path: 'post',
                       builder: (context, state) {
-                        return  SendPostSreen();
+                        return SendPostSreen();
                       },
                     ),
                   ],

@@ -13,7 +13,7 @@ import 'models/user_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp( ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
@@ -22,7 +22,7 @@ void main() async {
 }
 
 class MyApp extends ConsumerWidget {
-   MyApp({super.key});
+  MyApp({super.key});
 
   UserModel? userModel;
 
@@ -38,7 +38,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(goRouteProvider);
 
-     ref.watch(authStateChangeProvider).whenData((data) {
+    ref.watch(authStateChangeProvider).whenData((data) {
       if (data != null) {
         getData(ref, data);
       }
