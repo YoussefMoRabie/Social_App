@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:social_app/core/core.dart';
+import 'package:social_app/features/timeline/screens/send_post.dart';
 import 'package:social_app/features/timeline/screens/widgets/post.dart';
+import 'package:social_app/theme/pallete.dart';
+
+import '../controller/timeline_controller.dart';
 
 class TimelineScreen extends ConsumerWidget {
   TimelineScreen({super.key});
@@ -49,40 +54,53 @@ class TimelineScreen extends ConsumerWidget {
     },
   ];
 
+  void sendPost(BuildContext context) {
+    context.go('/timeline/post');
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Timeline'),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: dataArray.length,
-                  itemBuilder: (context, index) {
-                    return Post(
-                        imageUrl: dataArray[index]['imageUrl'],
-                        username: dataArray[index]['username'],
-                        createdAt: dataArray[index]['createdAt'],
-                        description: dataArray[index]['description'],
-                        likes: dataArray[index]['likes'],
-                        comments: dataArray[index]['comments']);
-                  },
+        appBar: AppBar(
+          title: const Text('Timeline'),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ref.watch(postsProvider).when(
+                        data: (data) {
+                          return ListView.builder(
+                            itemCount: data.length,
+                            itemBuilder: (context, index) {
+                              return Post(
+                                outside: true,
+                                post: data[index],
+                              );
+                            },
+                          );
+                        },
+                        error: (e, s) =>  Text('$s'),
+                        loading: () => const Loader(),
+                      ),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  context.go('/timeline/post/1');
-                },
-                child: const Text('Post'),
-              ),
-            ],
+                // ElevatedButton(
+                //   onPressed: () {
+                //     context.go('/timeline/post/1');
+                //   },
+                //   child: const Text('Post'),
+                // ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Palette.primary,
+          onPressed: () => sendPost(context),
+          child: const Icon(
+            Icons.add,
+          ),
+        ));
   }
 }
