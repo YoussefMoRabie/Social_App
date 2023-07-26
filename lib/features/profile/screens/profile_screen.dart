@@ -26,7 +26,7 @@ class ProfileScreen extends ConsumerWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: const Image(
-                          image: AssetImage("assets/p.jpg"),
+                          image: AssetImage("assets/images/profile.jpg"),
                           fit: BoxFit.cover,
                         )),
                   ),

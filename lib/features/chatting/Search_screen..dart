@@ -51,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
 // }
 
   void onSearch()async{
-   UserModel m= UserModel(name: 'Wedayn', profilePic: '', uid: '099', score: 0);
+   UserModel m= UserModel(name: 'Wedayn', profilePic: '', uid: '099', score: 0, followers: [], following: [], key: '', validityOfKey: 0);
    setState(() {
      searchResult.add(m.toMap());
         isLoading = true;

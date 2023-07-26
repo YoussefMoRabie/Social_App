@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/core/core.dart';
 import 'package:social_app/features/auth/screens/widgets/custom_submit_button.dart';
 import 'package:social_app/features/auth/screens/widgets/custom_text_field.dart';

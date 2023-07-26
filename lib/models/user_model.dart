@@ -1,14 +1,24 @@
+import 'package:flutter/foundation.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   final String name;
   final String profilePic;
   final String uid;
   final int score;
+  final List<String> followers;
+  final List<String> following;
+  final int validityOfKey;
+  final String key;
   UserModel({
     required this.name,
     required this.profilePic,
     required this.uid,
     required this.score,
+    required this.followers,
+    required this.following,
+    required this.validityOfKey,
+    required this.key,
   });
 
   UserModel copyWith({
@@ -16,12 +26,20 @@ class UserModel {
     String? profilePic,
     String? uid,
     int? score,
+    List<String>? followers,
+    List<String>? following,
+    int? validityOfKey,
+    String? key,
   }) {
     return UserModel(
       name: name ?? this.name,
       profilePic: profilePic ?? this.profilePic,
       uid: uid ?? this.uid,
       score: score ?? this.score,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
+      validityOfKey: validityOfKey ?? this.validityOfKey,
+      key: key ?? this.key,
     );
   }
 
@@ -32,6 +50,10 @@ class UserModel {
       'profilePic': profilePic,
       'uid': uid,
       'score': score,
+      'followers': followers,
+      'following': following,
+      'validityOfKey': validityOfKey,
+      'key': key,
     };
   }
 
@@ -41,12 +63,16 @@ class UserModel {
       profilePic: map['profilePic'] as String,
       uid: map['uid'] as String,
       score: map['score'] as int,
+      followers: List<String>.from((map['followers'] as List<dynamic>)),
+      following: List<String>.from((map['following'] as List<dynamic>)),
+      validityOfKey: map['validityOfKey'] as int,
+      key: map['key'] as String,
     );
   }
 
   @override
   String toString() {
-    return 'UserModel(name: $name, profilePic: $profilePic, uid: $uid, score: $score)';
+    return 'UserModel(name: $name, profilePic: $profilePic, uid: $uid, score: $score, followers: $followers, following: $following, validityOfKey: $validityOfKey, key: $key)';
   }
 
   @override
@@ -56,11 +82,22 @@ class UserModel {
     return other.name == name &&
         other.profilePic == profilePic &&
         other.uid == uid &&
-        other.score == score;
+        other.score == score &&
+        listEquals(other.followers, followers) &&
+        listEquals(other.following, following) &&
+        other.validityOfKey == validityOfKey &&
+        other.key == key;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^ profilePic.hashCode ^ uid.hashCode ^ score.hashCode;
+    return name.hashCode ^
+        profilePic.hashCode ^
+        uid.hashCode ^
+        score.hashCode ^
+        followers.hashCode ^
+        following.hashCode ^
+        validityOfKey.hashCode ^
+        key.hashCode;
   }
 }

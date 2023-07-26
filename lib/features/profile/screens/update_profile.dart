@@ -27,7 +27,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage("assets/p.jpg"),fit: BoxFit.cover,)),
+                        child: const Image(image: AssetImage("assets/images/profile.jpg"),fit: BoxFit.cover,)),
                   ),
                   Positioned(
                     bottom: 0,
