@@ -132,7 +132,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       Consumer(
                         builder: (context, ref, child) => CustomSubmitButton(
-                          label: "Sign Up",
+                          label: ref.watch(authControllerProvider)
+                          ? const Loader(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              "Sign up",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           onPressed: () => _submitForm(ref),
                         ),
                       ),
