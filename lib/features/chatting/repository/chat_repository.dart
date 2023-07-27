@@ -1,27 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_app/core/providers/firestore_providers.dart';
+import 'package:social_app/features/auth/controller/auth_controller.dart';
 import 'package:social_app/models/message_model.dart';
-import 'package:social_app/models/user_model.dart';
-
 import '../../../core/common/firebase_constants.dart';
 
+final chatRpositoryProvider = Provider((ref) =>
+    ChatRpository(firebaseFirestore: ref.read(firestoreProvider), ref: ref));
+
 class ChatRpository {
-  final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
-  final UserModel _currentUser;
+  final Ref _ref;
 
   ChatRpository(
-      {required FirebaseAuth firebaseAuth,
-      required FirebaseFirestore firebaseFirestore,
-      required UserModel currentUser})
-      : _firebaseAuth = firebaseAuth,
-        _firebaseFirestore = firebaseFirestore,
-        _currentUser = currentUser;
+      {required FirebaseFirestore firebaseFirestore, required Ref ref})
+      : _firebaseFirestore = firebaseFirestore,
+        _ref = ref;
   CollectionReference get _chats =>
       _firebaseFirestore.collection(FirebaseConstants.chatsCollection);
 
   //SEND MESSAGE
   Future<void> sendMessage(String recieverId, String messageText) async {
+    final _currentUser = _ref.watch(userProvider.notifier).state!;
     //current user id
     final Timestamp timestamp = Timestamp.now();
     //create message
