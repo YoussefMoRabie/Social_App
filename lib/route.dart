@@ -12,6 +12,7 @@ import 'package:social_app/features/timeline/screens/send_post.dart';
 
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/screens/show_login_or_signup.dart';
+import 'features/chatting/views/chat.dart';
 import 'features/profile/screens/settings_screen.dart';
 import 'features/timeline/screens/post_screen.dart';
 import 'features/timeline/screens/timeline_screen.dart';
@@ -93,9 +94,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
               GoRoute(
                   path: '/contact',
                   builder: (context, state) {
-                    return ContactScreen(
-                      user: mm,
-                    );
+                    return Chat();
                   },
                   routes: [
                     GoRoute(

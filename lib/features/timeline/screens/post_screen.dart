@@ -32,7 +32,9 @@ class PostScreen extends ConsumerWidget {
                               children: [
                                 ListView.builder(
                                   padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height * getPostPadding(post.content) *1.2,
+                                    top: MediaQuery.of(context).size.height *
+                                        getPostPadding(post.content) *
+                                        1.2,
                                   ),
                                   shrinkWrap: true,
                                   itemCount: comments.length,

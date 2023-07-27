@@ -98,7 +98,7 @@ class TimelineRepository {
         'downvotes': FieldValue.arrayRemove([userId]),
       });
     } else {
-       await _comments.doc(comment.id).update({
+      await _comments.doc(comment.id).update({
         'downvotes': FieldValue.arrayUnion([userId]),
       });
     }
@@ -118,14 +118,13 @@ class TimelineRepository {
         'upvotes': FieldValue.arrayRemove([userId]),
       });
     } else {
-       await _comments.doc(comment.id).update({
+      await _comments.doc(comment.id).update({
         'upvotes': FieldValue.arrayUnion([userId]),
       });
     }
-   return _users.doc(comment.userId).update({
+    return _users.doc(comment.userId).update({
       "score": FieldValue.increment(1),
     });
-    
   }
 
   Stream<List<PostModel>> fetchPosts() {
@@ -161,7 +160,9 @@ class TimelineRepository {
   Stream<PostModel> fetchPostById(String postId) {
     final doc = _posts.doc(postId).get();
     return doc.asStream().map((snapshot) {
-      return PostModel.fromMap(snapshot.data() as Map<String, dynamic>);
+      final PostModel p =
+          PostModel.fromMap(snapshot.data() as Map<String, dynamic>);
+      return p;
     });
   }
 }
