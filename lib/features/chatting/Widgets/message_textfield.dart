@@ -72,7 +72,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
                padding: EdgeInsets.all(8),
                decoration: BoxDecoration(
                  shape: BoxShape.circle,
-                 color: Colors.blue,
+                 color: Palette.primary,
                ),
                child: Icon(Icons.send,color: Colors.white,),
              ),

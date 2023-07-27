@@ -39,7 +39,7 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
           if(snapshot.hasData){
             if(snapshot.data.docs.length < 1){
               return Center(
-                child: Text("No Chats Available !"),
+                child: Text("No Chats Available !",),
               );
             }
             return ListView.builder(
@@ -62,7 +62,7 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
                             height: 50,
                           ),
                         ),
-                        title: Text(friend['name']),
+                        title: Text(friend['name'],style: TextStyle(fontSize: 20),),
                         subtitle: Container(
                           child: Text("$lastMsg",style: TextStyle(color: Colors.grey),overflow: TextOverflow.ellipsis,),
                         ),
@@ -85,6 +85,7 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
         }),
 
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Palette.primary,
         child: Icon(Icons.search),
         onPressed: (){
            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(user)));
