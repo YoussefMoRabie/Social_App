@@ -52,8 +52,11 @@ class SettingsScreen extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 10),
-                const Text("Meow was here",
-                    style: TextStyle(color: Palette.white, fontSize: 28)),
+                Text(
+                  ref.read(userProvider)?.name ?? ".......",
+                  style: TextStyle(color: Palette.white, fontSize: 28),
+                )
+,
                 const Text("Bio", style: TextStyle(color: Palette.white)),
                 const SizedBox(height: 20),
           

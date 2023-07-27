@@ -113,14 +113,21 @@ class ProfilePage extends ConsumerWidget {
                 children: [
                   Column(
                     children: [
-                      Text(
-                        "0",
-                        style: const TextStyle(
-                          color: Palette.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      ref.watch(postsByUserIdProvider(userId)).when(
+                        data: (data) {
+                          return Text(
+                            data.length.toString(),
+                            style: const TextStyle(
+                              color: Palette.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        },
+                        error: (e, s) => Text('$s'),
+                        loading: () => const Loader(),
                       ),
+
                       const Text(
                         "Posts",
                         style: TextStyle(color: Palette.white),
