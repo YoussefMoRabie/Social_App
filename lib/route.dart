@@ -4,6 +4,7 @@ import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_app/features/chatting/contact_screen.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
+import 'package:social_app/features/leaderboard/screens/leaderboard_screen.dart';
 import 'package:social_app/features/profile/screens/profile_page.dart';
 import 'package:social_app/features/profile/screens/random_profile_page.dart';
 import 'package:social_app/features/profile/screens/update_profile.dart';
@@ -25,7 +26,6 @@ final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _shellNavigatorContactKey =
     GlobalKey<NavigatorState>(debugLabel: 'contact');
-    
 
 final goRouteProvider = Provider<GoRouter>((ref) {
   User? m = FirebaseAuth.instance.currentUser;
@@ -76,6 +76,17 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                   ],
                 ),
               ]),
+          StatefulShellBranch(
+            navigatorKey: _shellNavigatorLeaderboardKey,
+            routes: [
+              GoRoute(
+                path: '/leaderboard',
+                pageBuilder: (context, state) =>
+                    NoTransitionPage(child: LeaderboardScreen()),
+                routes: [],
+              ),
+            ],
+          ),
           StatefulShellBranch(
             navigatorKey: _shellNavigatorContactKey,
             routes: [
