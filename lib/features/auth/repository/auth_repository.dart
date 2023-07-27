@@ -47,7 +47,7 @@ class AuthRepository {
 
   //sign up
   FutureEither<UserModel> signUp(
-      String name , String email, String password, String key) async {
+      String name , String email, String password, String key,) async {
     try {
       //First: look for a friend who has this key
       final foundUser =

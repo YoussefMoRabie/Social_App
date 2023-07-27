@@ -53,15 +53,21 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
                     if(asyncSnapshot.hasData){
                       var friend = asyncSnapshot.data;
                       return ListTile(
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(80),
-                          child: CachedNetworkImage(
-                            imageUrl:friend['profilePic'],
-                            placeholder: (conteext,url)=>CircularProgressIndicator(),
-                            errorWidget: (context,url,error)=>Icon(Icons.error,),
-                            height: 50,
-                          ),
-                        ),
+                        // leading: ClipRRect(
+                        //   borderRadius: BorderRadius.circular(80),
+                        //   child: CachedNetworkImage(
+                        //     imageUrl:friend['profilePic'],
+                        //     placeholder: (conteext,url)=>CircularProgressIndicator(),
+                        //     errorWidget: (context,url,error)=>Icon(Icons.error,),
+                        //     height: 50,
+                        //   ),
+                        // ),
+                       leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: const Image(
+                            image: AssetImage("assets/images/profile.jpg"),
+                            fit: BoxFit.cover,
+                          )),
                         title: Text(friend['name'],style: TextStyle(fontSize: 20),),
                         subtitle: Container(
                           child: Text("$lastMsg",style: TextStyle(color: Colors.grey),overflow: TextOverflow.ellipsis,),

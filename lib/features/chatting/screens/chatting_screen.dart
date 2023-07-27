@@ -12,75 +12,86 @@ class ChatScreen extends StatelessWidget {
   final String friendId;
   final String friendName;
   final String friendImage;
-  
+
   ChatScreen({
     required this.currentUser,
     required this.friendId,
     required this.friendName,
     required this.friendImage,
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.surface,
         title: Row(
+          mainAxisSize: MainAxisSize.min,
+        
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(80),
-              
-              child:  CachedNetworkImage(
-                            imageUrl:friendImage,
-                            placeholder: (conteext,url)=>CircularProgressIndicator(),
-                            errorWidget: (context,url,error)=>Icon(Icons.error,),
-                            height: 40,
-                          ),
+           ClipRRect(
+          
+                          borderRadius: BorderRadius.circular(80),
+                          child: const Image(
+                            width: 30,
+                            height: 30,
+                            image: AssetImage("assets/images/profile.jpg"),
+                            fit: BoxFit.cover,
+                          )),
+            SizedBox(
+              width: 10,
             ),
-            SizedBox(width: 5,),
-            Text(friendName,style: TextStyle(fontSize: 20),)
+            Text(
+              friendName,
+              style: TextStyle(fontSize: 20),
+            )
           ],
         ),
       ),
-
       body: Column(
         children: [
-           Expanded(child: Container(
-             padding: EdgeInsets.all(10),
-             decoration: BoxDecoration(
-               color: Palette.background,
-               borderRadius: BorderRadius.only(
-                 topLeft: Radius.circular(25),
-                 topRight: Radius.circular(25)
-               )
-             ),
-             child: StreamBuilder(
-               stream: FirebaseFirestore.instance.collection("users").doc(currentUser.uid).collection('messages').doc(friendId).collection('chats').orderBy("date",descending: true).snapshots(),
-               builder: (context,AsyncSnapshot snapshot){
-                   if(snapshot.hasData){
-                     if(snapshot.data.docs.length < 1){
-                       return Center(
-                         child: Text("Say Hi"),
-                       );
-                     }
-                     return ListView.builder(
-                       itemCount: snapshot.data.docs.length,
-                       reverse: true,
-                       physics: BouncingScrollPhysics(),
-                       itemBuilder: (context,index){
-                          bool isMe = snapshot.data.docs[index]['senderId'] == currentUser.uid;
-                          return SingleMessage(message: snapshot.data.docs[index]['message'], isMe: isMe);
-                       });
-                   }
-                   return Center(
-                     child: CircularProgressIndicator()
-                   );
-               }),
-           )),
-           MessageTextField(currentUser.uid, friendId),
+          Expanded(
+              child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Palette.background,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25))),
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(currentUser.uid)
+                    .collection('messages')
+                    .doc(friendId)
+                    .collection('chats')
+                    .orderBy("date", descending: true)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.docs.length < 1) {
+                      return Center(
+                        child: Text("Say Hi"),
+                      );
+                    }
+                    return ListView.builder(
+                        itemCount: snapshot.data.docs.length,
+                        reverse: true,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          bool isMe = snapshot.data.docs[index]['senderId'] ==
+                              currentUser.uid;
+                          return SingleMessage(
+                              message: snapshot.data.docs[index]['message'],
+                              isMe: isMe);
+                        });
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }),
+          )),
+          MessageTextField(currentUser.uid, friendId),
         ],
       ),
-      
     );
   }
 }
