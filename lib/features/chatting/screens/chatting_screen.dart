@@ -13,7 +13,7 @@ class ChatScreen extends StatelessWidget {
   final String friendName;
   final String friendImage;
 
-  ChatScreen({
+  const ChatScreen({super.key, 
     required this.currentUser,
     required this.friendId,
     required this.friendName,
@@ -38,12 +38,12 @@ class ChatScreen extends StatelessWidget {
                             image: AssetImage("assets/images/profile.jpg"),
                             fit: BoxFit.cover,
                           )),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
               friendName,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             )
           ],
         ),
@@ -52,8 +52,8 @@ class ChatScreen extends StatelessWidget {
         children: [
           Expanded(
               child: Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
                 color: Palette.background,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(25),
@@ -70,14 +70,14 @@ class ChatScreen extends StatelessWidget {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data.docs.length < 1) {
-                      return Center(
+                      return const Center(
                         child: Text("Say Hi"),
                       );
                     }
                     return ListView.builder(
                         itemCount: snapshot.data.docs.length,
                         reverse: true,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           bool isMe = snapshot.data.docs[index]['senderId'] ==
                               currentUser.uid;
@@ -86,7 +86,7 @@ class ChatScreen extends StatelessWidget {
                               isMe: isMe);
                         });
                   }
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }),
           )),
           MessageTextField(currentUser.uid, friendId),

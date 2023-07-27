@@ -7,7 +7,7 @@ import 'chatting_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   UserModel user;
-  SearchScreen(this.user);
+  SearchScreen(this.user, {super.key});
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -28,19 +28,19 @@ class _SearchScreenState extends State<SearchScreen> {
         .where("name", isEqualTo: searchController.text)
         .get()
         .then((value) {
-      if (value.docs.length < 1) {
+      if (value.docs.isEmpty) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("No User Found")));
+            .showSnackBar(const SnackBar(content: Text("No User Found")));
         setState(() {
           isLoading = false;
         });
         return;
       }
-      value.docs.forEach((user) {
+      for (var user in value.docs) {
         if (user.data()['name'] != widget.user.name) {
           searchResult.add(user.data());
         }
-      });
+      }
       setState(() {
         isLoading = false;
       });
@@ -86,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: Palette.background,
       appBar: AppBar(
-        title: Text("Search your Friend"),
+        title: const Text("Search your Friend"),
       ),
       body: Column(
         children: [
@@ -109,19 +109,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   onPressed: () {
                     onSearch();
                   },
-                  icon: Icon(Icons.search))
+                  icon: const Icon(Icons.search))
             ],
           ),
-          if (searchResult.length > 0)
+          if (searchResult.isNotEmpty)
             Expanded(
                 child: ListView.builder(
                     itemCount: searchResult.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: CircleAvatar(
+                        leading: const CircleAvatar(
                             // child: Image.network(searchResult[index]['profilePic']),
-                            child: const Image(
+                            child: Image(
                           image: AssetImage("assets/images/profile.jpg"),
                           fit: BoxFit.cover,
                         )),
@@ -143,11 +143,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                           friendImage: searchResult[index]
                                               ['profilePic'])));
                             },
-                            icon: Icon(Icons.message)),
+                            icon: const Icon(Icons.message)),
                       );
                     }))
           else if (isLoading == true)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             )
         ],

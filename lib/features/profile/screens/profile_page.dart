@@ -59,7 +59,7 @@ class ProfilePage extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               Text(user.name,
-                  style: TextStyle(color: Palette.white, fontSize: 28)),
+                  style: const TextStyle(color: Palette.white, fontSize: 28)),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,8 +120,8 @@ class ProfilePage extends ConsumerWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
-              Divider(
+              const SizedBox(height: 10),
+              const Divider(
                 color: Palette.primary,
                 thickness: 1,
               ),

@@ -54,7 +54,7 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 10),
                 Text(
                   ref.read(userProvider)?.name ?? ".......",
-                  style: TextStyle(color: Palette.white, fontSize: 28),
+                  style: const TextStyle(color: Palette.white, fontSize: 28),
                 )
 ,
                 const Text("Bio", style: TextStyle(color: Palette.white)),

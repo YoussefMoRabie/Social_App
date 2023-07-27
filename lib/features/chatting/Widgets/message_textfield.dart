@@ -7,24 +7,24 @@ class MessageTextField extends StatefulWidget {
   final String currentId;
   final String friendId;
 
-  MessageTextField(this.currentId,this.friendId);
+  const MessageTextField(this.currentId,this.friendId, {super.key});
 
   @override
   _MessageTextFieldState createState() => _MessageTextFieldState();
 }
 
 class _MessageTextFieldState extends State<MessageTextField> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
        color: Palette.surface,
-       padding: EdgeInsetsDirectional.all(8),
+       padding: const EdgeInsetsDirectional.all(8),
        child: Row(
          children: [
            Expanded(child: TextField(
              controller: _controller,
-             style: TextStyle(color: Colors.white),
+             style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
             
                 labelText:"Type your Message",
@@ -32,13 +32,13 @@ class _MessageTextFieldState extends State<MessageTextField> {
             
                 filled: true,
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0),
+                  borderSide: const BorderSide(width: 0),
                   gapPadding: 10,
                   borderRadius: BorderRadius.circular(25)
                 )
               ),
            )),
-           SizedBox(width: 20,),
+           const SizedBox(width: 20,),
            GestureDetector(
              onTap: ()async{
                String message = _controller.text;
@@ -69,12 +69,12 @@ class _MessageTextFieldState extends State<MessageTextField> {
                });
              },
              child: Container(
-               padding: EdgeInsets.all(8),
-               decoration: BoxDecoration(
+               padding: const EdgeInsets.all(8),
+               decoration: const BoxDecoration(
                  shape: BoxShape.circle,
                  color: Palette.primary,
                ),
-               child: Icon(Icons.send,color: Colors.white,),
+               child: const Icon(Icons.send,color: Colors.white,),
              ),
            )
          ],

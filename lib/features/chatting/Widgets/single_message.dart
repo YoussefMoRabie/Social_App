@@ -5,7 +5,7 @@ import 'package:social_app/theme/pallete.dart';
 class SingleMessage extends StatelessWidget {
   final String message;
   final bool isMe;
-  SingleMessage({
+  const SingleMessage({super.key, 
     required this.message,
     required this.isMe
   });
@@ -15,14 +15,14 @@ class SingleMessage extends StatelessWidget {
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.all(16),
-          margin: EdgeInsets.all(16),
-          constraints: BoxConstraints(maxWidth: 200),
+          padding: const EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
+          constraints: const BoxConstraints(maxWidth: 200),
           decoration: BoxDecoration(
             color: isMe ?Palette.primary: Colors.blueGrey,
-            borderRadius: BorderRadius.all(Radius.circular(12))
+            borderRadius: const BorderRadius.all(Radius.circular(12))
           ),
-          child: Text(message,style: TextStyle(color: Colors.white,),)
+          child: Text(message,style: const TextStyle(color: Colors.white,),)
         ),
       ],
       

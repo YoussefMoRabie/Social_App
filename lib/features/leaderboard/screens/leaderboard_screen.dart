@@ -25,8 +25,8 @@ class LeaderboardScreen extends ConsumerWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(10),
-              child: Row(
+              padding: const EdgeInsets.all(10),
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [Text("Rank"), Text("username"), Text("Score")],
               ),
@@ -42,10 +42,10 @@ class LeaderboardScreen extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
                                     color: Palette.primary, width: 1)),
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             width: double.infinity,
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: InkWell(
                               onTap: () {
                                 context.go('/leaderboard/profile/${users[index].uid}');
@@ -61,7 +61,7 @@ class LeaderboardScreen extends ConsumerWidget {
                                   ),
                                   Text(
                                     users[index].score.toString(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Palette.primary,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),

@@ -28,13 +28,13 @@ class SendPostSreen extends ConsumerWidget {
           ],
         ),
         body:  Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: TextField(
             controller: _textEditingController,
             maxLines: 20,
             cursorColor: Palette.primary,
-            style: TextStyle(color: Palette.white, fontSize: 20),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Palette.white, fontSize: 20),
+            decoration: const InputDecoration(
               hintText: "What's on your mind?",
               hintStyle: TextStyle(color: Colors.grey, fontSize: 25),
               border: InputBorder.none,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:social_app/core/common/custom_submit_button.dart';
 import 'package:social_app/core/common/custom_text_field.dart';
@@ -74,7 +73,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     children: [
                       CustomTextField(
                         controller: _username,
-                        validator: (p0) {},
+                        validator: (p0) {
+                          return null;
+                        },
                         hintText: "Username",
                         icon: Icons.person,
                         keyboardType: TextInputType.name,
@@ -82,7 +83,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       const SizedBox(height: 30),
                       CustomTextField(
                         controller: _username,
-                        validator: (p0) {},
+                        validator: (p0) {
+                          return null;
+                        },
                         hintText: "Phone Number",
                         icon: Icons.phone,
                         keyboardType: TextInputType.name,

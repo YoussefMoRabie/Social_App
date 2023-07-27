@@ -1,12 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../models/user_model.dart';
 import '../../../theme/pallete.dart';
 import '../../auth/controller/auth_controller.dart';
 import 'Search_screen..dart';
@@ -17,7 +14,7 @@ import 'chatting_screen.dart';
 class ContactScreen extends ConsumerStatefulWidget {
 
 
-  ContactScreen({super.key});
+  const ContactScreen({super.key});
   @override
   ConsumerState<ContactScreen> createState() => _ContactScreenState();
 }
@@ -28,7 +25,7 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
     final user = ref.watch(userProvider)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact'),
+        title: const Text('Contact'),
         centerTitle: true,
         backgroundColor: Palette.background,
         
@@ -39,7 +36,7 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
         builder: (context,AsyncSnapshot snapshot){
           if(snapshot.hasData){
             if(snapshot.data.docs.length < 1){
-              return Center(
+              return const Center(
                 child: Text("No Chats Available !",),
               );
             }
@@ -74,10 +71,8 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
                               fit: BoxFit.cover,
                             )),
                        ),
-                        title: Text(friend['name'],style: TextStyle(fontSize: 20),),
-                        subtitle: Container(
-                          child: Text("$lastMsg",style: TextStyle(color: Colors.grey),overflow: TextOverflow.ellipsis,),
-                        ),
+                        title: Text(friend['name'],style: const TextStyle(fontSize: 20),),
+                        subtitle: Text("$lastMsg",style: const TextStyle(color: Colors.grey),overflow: TextOverflow.ellipsis,),
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen(
                             currentUser: user,
@@ -87,18 +82,18 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
                         },
                       );
                     }
-                    return LinearProgressIndicator();
+                    return const LinearProgressIndicator();
                   },
 
                 );
               });
           }
-          return Center(child: CircularProgressIndicator(),);
+          return const Center(child: CircularProgressIndicator(),);
         }),
 
       floatingActionButton: FloatingActionButton(
         backgroundColor: Palette.primary,
-        child: Icon(Icons.search),
+        child: const Icon(Icons.search),
         onPressed: (){
            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchScreen(user)));
         },
