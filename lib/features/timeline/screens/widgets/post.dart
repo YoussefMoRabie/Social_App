@@ -23,13 +23,7 @@ class Post extends ConsumerWidget {
 
   UserModel? postOwner;
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(getUserDataProvider(post.userId)).whenData((value) {
-      postOwner = value;
-    });
-
-    void navgaiteToPostPage(String uuid) {
+  void navgaiteToPostPage(String uuid , BuildContext context) {
       context.go('/timeline/post/$uuid');
     }
 
@@ -62,8 +56,14 @@ class Post extends ConsumerWidget {
           .deletePost(context: context, post: post, inside: outside ?? false);
     }
 
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(getUserDataProvider(post.userId)).whenData((value) {
+      postOwner = value;
+    });
+    final userId = ref.read(userProvider)?.uid ?? "";
     return InkWell(
-      onTap: !outside! ? null : () => navgaiteToPostPage(post.id),
+      onTap: !outside! ? null : () => navgaiteToPostPage(post.id, context),
       child: Container(
         width: double.infinity,
         margin: const EdgeInsets.all(20),
@@ -102,13 +102,15 @@ class Post extends ConsumerWidget {
                   ],
                 ),
                 const Spacer(),
-                IconButton(
-                  onPressed: () => deletePost(context, ref),
-                  icon: const Icon(
-                    Icons.delete_outline_outlined,
-                    color: Colors.grey,
-                  ),
-                ),
+                post.userId == userId
+                    ? IconButton(
+                        onPressed: () => deletePost(context, ref),
+                        icon: const Icon(
+                          Icons.delete_outline_outlined,
+                          color: Colors.grey,
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
             const SizedBox(
@@ -141,11 +143,11 @@ class Post extends ConsumerWidget {
                         children: [
                           IconButton(
                             icon: post.likes
-                                    .contains(ref.read(userProvider)!.uid)
+                                    .contains(userId)
                                 ? const Icon(Icons.favorite)
                                 : const Icon(Icons.favorite_border_outlined),
                             color:
-                                post.likes.contains(ref.read(userProvider)!.uid)
+                                post.likes.contains(userId)
                                     ? Palette.primary
                                     : Colors.grey,
                             onPressed: () => likePost(context, ref),

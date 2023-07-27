@@ -19,14 +19,20 @@ final _shellNavigatorTimelineKey =
     GlobalKey<NavigatorState>(debugLabel: 'timeline');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
-    final _shellNavigatorContactKey =
+final _shellNavigatorContactKey =
     GlobalKey<NavigatorState>(debugLabel: 'contact');
 
 final goRouteProvider = Provider<GoRouter>((ref) {
-
   User? m = FirebaseAuth.instance.currentUser;
   UserModel mm = UserModel(
-      name: 'w', profilePic: '', uid: '000', score: 0, followers: [], following: [], key: '9999', validityOfKey: 2);
+      name: 'w',
+      profilePic: '',
+      uid: '000',
+      score: 0,
+      followers: [],
+      following: [],
+      key: '9999',
+      validityOfKey: 2);
   return GoRouter(
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
@@ -65,13 +71,15 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                   ],
                 ),
               ]),
-               StatefulShellBranch(
+          StatefulShellBranch(
             navigatorKey: _shellNavigatorContactKey,
             routes: [
               GoRoute(
                   path: '/contact',
                   builder: (context, state) {
-                    return  ContactScreen(user: mm,);
+                    return ContactScreen(
+                      user: mm,
+                    );
                   },
                   routes: [
                     GoRoute(
@@ -122,9 +130,10 @@ final goRouteProvider = Provider<GoRouter>((ref) {
       ref.watch(authStateChangeProvider).whenData((value) {
         userIsLoggedIn = value != null;
       });
+
       if (userLoggingIn && userIsLoggedIn) {
         return '/timeline';
-      } else if (!userLoggingIn && !userIsLoggedIn) {
+      } else if ((!userLoggingIn && !userIsLoggedIn)) {
         return '/login';
       } else {
         return null;
