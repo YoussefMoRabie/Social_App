@@ -79,6 +79,7 @@ class TimelineScreen extends ConsumerWidget {
                             itemCount: data.length,
                             itemBuilder: (context, index) {
                               return Post(
+                                path: "timeline",
                                 outside: true,
                                 post: data[index],
                               );

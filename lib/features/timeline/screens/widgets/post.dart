@@ -14,17 +14,19 @@ import '../../controller/timeline_controller.dart';
 class Post extends ConsumerWidget {
   final PostModel post;
   final bool? outside;
+  final String path;
 
   Post({
     Key? key,
     required this.post,
     this.outside = false,
+    required this.path,
   }) : super(key: key);
 
   UserModel? postOwner;
 
   void navgaiteToPostPage(String uuid , BuildContext context) {
-      context.go('/timeline/post/$uuid');
+      context.go('/$path/post/$uuid');
     }
 
     void pickReaction(BuildContext context, WidgetRef ref) async {

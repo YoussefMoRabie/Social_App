@@ -8,8 +8,8 @@ import 'package:social_app/features/profile/screens/widgets/profile_menu_widget.
 import '../../../theme/pallete.dart';
 import '../../auth/controller/auth_controller.dart';
 
-class ProfileScreen extends ConsumerWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class SettingsScreen extends ConsumerWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -4,12 +4,14 @@ import "package:go_router/go_router.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_app/features/chatting/contact_screen.dart';
 import 'package:social_app/features/home/screens/home_screen.dart';
+import 'package:social_app/features/profile/screens/profile_page.dart';
+import 'package:social_app/features/profile/screens/random_profile_page.dart';
 import 'package:social_app/features/profile/screens/update_profile.dart';
 import 'package:social_app/features/timeline/screens/send_post.dart';
 
 import 'features/auth/controller/auth_controller.dart';
 import 'features/auth/screens/show_login_or_signup.dart';
-import 'features/profile/screens/profile_screen.dart';
+import 'features/profile/screens/settings_screen.dart';
 import 'features/timeline/screens/post_screen.dart';
 import 'features/timeline/screens/timeline_screen.dart';
 import 'models/user_model.dart';
@@ -100,13 +102,28 @@ final goRouteProvider = Provider<GoRouter>((ref) {
               GoRoute(
                   path: '/profile',
                   builder: (context, state) {
-                    return const ProfileScreen();
+                    return const ProfilePage();
                   },
                   routes: [
+                    GoRoute(
+                      path: 'settings',
+                      builder: (context, state) {
+                        return const SettingsScreen();
+                      },
+                    ),
                     GoRoute(
                       path: 'update',
                       builder: (context, state) {
                         return const UpdateProfileScreen();
+                      },
+                    ),
+                    GoRoute(
+                      path: ':id',
+                      builder: (context, state) {
+                        final id = state.pathParameters['id']!;
+                        return RandomProfilePage(
+                          id: id,
+                        );
                       },
                     ),
                     GoRoute(

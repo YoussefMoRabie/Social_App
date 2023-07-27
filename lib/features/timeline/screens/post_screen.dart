@@ -46,6 +46,7 @@ class PostScreen extends ConsumerWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Post(
+                                        path: "timeline",
                                         post: post,
                                       ),
                                       const Divider(
