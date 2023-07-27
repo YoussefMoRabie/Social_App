@@ -29,8 +29,14 @@ class Post extends ConsumerWidget {
     context.go('/$path/post/$uuid');
   }
 
-  void navigateToProfilePage(BuildContext context){
-    context.go("/$path/profile/${post.userId}");
+  void navigateToProfilePage(BuildContext context) {
+    if (path == "profile") {
+      context.go("/$path/${post.userId}");
+    }
+    else {
+      context.go("/$path/profile/${post.userId}");
+
+    }
   }
 
   void pickReaction(BuildContext context, WidgetRef ref) async {

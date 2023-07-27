@@ -14,6 +14,7 @@ class RandomProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUserId = ref.watch(userProvider)?.uid ?? "";
     return Scaffold(
       body: ref.watch(getUserDataProvider(id)).when(
             data: (data) {
@@ -57,52 +58,56 @@ class RandomProfilePage extends ConsumerWidget {
                       Text(data.name,
                           style: TextStyle(color: Palette.white, fontSize: 28)),
                       const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 10),
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Palette.primary,
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    "Follow",
-                                    style: TextStyle(
-                                      color: Palette.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                      currentUserId == data.uid
+                          ? SizedBox()
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 10),
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Palette.primary,
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Follow",
+                                          style: TextStyle(
+                                            color: Palette.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: Palette.primary),
-                                ),
-                                child: const Center(
-                                  child: Text(
-                                    "Message",
-                                    style: TextStyle(
-                                      color: Palette.primary,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  Expanded(
+                                    child: Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border:
+                                            Border.all(color: Palette.primary),
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          "Message",
+                                          style: TextStyle(
+                                            color: Palette.primary,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
