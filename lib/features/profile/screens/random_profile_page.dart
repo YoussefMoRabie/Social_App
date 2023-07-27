@@ -17,17 +17,14 @@ class RandomProfilePage extends ConsumerWidget {
   void followAndUnfollow(BuildContext context, WidgetRef ref,
       String currentUserId, UserModel user) {
     if (user.followers.contains(currentUserId)) {
-      print("here");
       ref
           .read(timelineControllerProvider.notifier)
           .unfollowPerson(context: context, userId: user.uid);
     } else {
-      print("there");
 
       ref
           .read(timelineControllerProvider.notifier)
           .followPerson(context: context, userId: user.uid);
-      // ref.refresh(getUserDataProvider(user.uid));
     }
   }
 

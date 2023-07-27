@@ -17,15 +17,13 @@ final authRepositoryProvider = Provider((ref) => AuthRepository(
 class AuthRepository {
   final FirebaseAuth _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore;
-  final Ref _ref;
 
   AuthRepository({
     required FirebaseAuth firebaseAuth,
     required FirebaseFirestore firebaseFirestore,
     required Ref ref,
   })  : _firebaseAuth = firebaseAuth,
-        _firebaseFirestore = firebaseFirestore,
-        _ref = ref;
+        _firebaseFirestore = firebaseFirestore;
 
   CollectionReference get _users =>
       _firebaseFirestore.collection(FirebaseConstants.userCollection);
