@@ -89,25 +89,23 @@ class TimelineController extends StateNotifier<bool> {
     );
   }
 
-  void deletePost({
-    required BuildContext context,
-    required PostModel post,
-  }) async {
+  void deletePost(
+      {required BuildContext context,
+      required PostModel post,
+      required bool inside}) async {
     state = true;
     final res = await _timelineRepository.deletePost(post);
     state = false;
     res.fold(
-      (l) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l.message),
-        ),
-      ),
-      (r) => ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Post Deleted"),
-        ),
-      ),
-    );
+        (l) => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.message),
+              ),
+            ), (r) {
+      if (!inside) {
+        context.pop();
+      }
+    });
   }
 
   void addComment({

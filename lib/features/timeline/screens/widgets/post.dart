@@ -56,6 +56,12 @@ class Post extends ConsumerWidget {
       ref.refresh(postByIdProvider(post.id));
     }
 
+    void deletePost(BuildContext context, WidgetRef ref) async {
+      ref
+          .watch(timelineControllerProvider.notifier)
+          .deletePost(context: context, post: post, inside: outside ?? false);
+    }
+
     return InkWell(
       onTap: !outside! ? null : () => navgaiteToPostPage(post.id),
       child: Container(
@@ -97,9 +103,9 @@ class Post extends ConsumerWidget {
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () => deletePost(context, ref),
                   icon: const Icon(
-                    Icons.more_horiz,
+                    Icons.delete_outline_outlined,
                     color: Colors.grey,
                   ),
                 ),
