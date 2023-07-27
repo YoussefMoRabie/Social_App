@@ -61,8 +61,12 @@ class TimelineScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      
         appBar: AppBar(
           title: const Text('Timeline'),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          scrolledUnderElevation: 0.0,
         ),
         body: SafeArea(
           child: Center(
