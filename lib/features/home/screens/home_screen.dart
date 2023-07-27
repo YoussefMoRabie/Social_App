@@ -42,20 +42,14 @@ class HomeScreen extends StatelessWidget {
             ),
             label: "Profile",
           ),
-          // NavigationDestination(
-          //   selectedIcon: ActiveIcon(
-          //     icon: Icons.leaderboard_outlined,
-          //   ),
-          //   icon: Icon(Icons.leaderboard_outlined),
-          //   label: "Leaderboard",
-          // ),
-          // NavigationDestination(
-          //   selectedIcon: ActiveIcon(
-          //     icon: Icons.chat_outlined,
-          //   ),
-          //   icon: Icon(Icons.chat_outlined),
-          //   label: "Chat",
-          // ),
+          NavigationDestination(
+            selectedIcon: ActiveIcon(
+              icon: Icons.leaderboard_outlined,
+            ),
+            icon: Icon(Icons.leaderboard_outlined),
+            label: "Leaderboard",
+          ),
+  
            NavigationDestination(
             selectedIcon: ActiveIcon(
               icon: Icons.message,
