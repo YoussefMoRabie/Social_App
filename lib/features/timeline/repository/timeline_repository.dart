@@ -165,4 +165,22 @@ class TimelineRepository {
       return p;
     });
   }
+
+  void followPerson(String userId, String currentUserId) async {
+    await _users.doc(userId).update({
+      "followers": FieldValue.arrayUnion([currentUserId]),
+    });
+    await _users.doc(currentUserId).update({
+      "following": FieldValue.arrayUnion([userId]),
+    });
+  }
+
+  void unFollowPerson(String userId, String currentUserId) async {
+    await _users.doc(userId).update({
+      "followers": FieldValue.arrayRemove([currentUserId]),
+    });
+    await _users.doc(currentUserId).update({
+      "following": FieldValue.arrayRemove([userId]),
+    });
+  }
 }

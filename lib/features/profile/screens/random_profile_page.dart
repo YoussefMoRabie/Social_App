@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:social_app/features/auth/controller/auth_controller.dart';
 import 'package:social_app/features/timeline/controller/timeline_controller.dart';
+import 'package:social_app/models/user_model.dart';
 
 import '../../../core/common/loader.dart';
 import '../../../theme/pallete.dart';
@@ -11,6 +13,27 @@ import '../../timeline/screens/widgets/post.dart';
 class RandomProfilePage extends ConsumerWidget {
   final String id;
   const RandomProfilePage({super.key, required this.id});
+
+  void followAndUnfollow(BuildContext context, WidgetRef ref,
+      String currentUserId, UserModel user) {
+    if (user.followers.contains(currentUserId)) {
+      print("here");
+      ref
+          .read(timelineControllerProvider.notifier)
+          .unfollowPerson(context: context, userId: user.uid);
+    } else {
+      print("there");
+
+      ref
+          .read(timelineControllerProvider.notifier)
+          .followPerson(context: context, userId: user.uid);
+      // ref.refresh(getUserDataProvider(user.uid));
+    }
+  }
+
+  void message(BuildContext context) {
+    context.go("/contact");
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -56,7 +79,8 @@ class RandomProfilePage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(data.name,
-                          style: const TextStyle(color: Palette.white, fontSize: 28)),
+                          style: const TextStyle(
+                              color: Palette.white, fontSize: 28)),
                       const SizedBox(height: 20),
                       currentUserId == data.uid
                           ? const SizedBox()
@@ -73,13 +97,23 @@ class RandomProfilePage extends ConsumerWidget {
                                         borderRadius: BorderRadius.circular(10),
                                         color: Palette.primary,
                                       ),
-                                      child: const Center(
-                                        child: Text(
-                                          "Follow",
-                                          style: TextStyle(
-                                            color: Palette.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                      child: Center(
+                                        child: TextButton(
+                                          onPressed: () => followAndUnfollow(
+                                            context,
+                                            ref,
+                                            currentUserId,
+                                            data,
+                                          ),
+                                          child:  Text(
+                                            data.followers.contains(currentUserId)
+                                                ? "Unfollow"
+                                                : "Follow",
+                                            style: TextStyle(
+                                              color: Palette.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -93,13 +127,16 @@ class RandomProfilePage extends ConsumerWidget {
                                         border:
                                             Border.all(color: Palette.primary),
                                       ),
-                                      child: const Center(
-                                        child: Text(
-                                          "Message",
-                                          style: TextStyle(
-                                            color: Palette.primary,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
+                                      child: Center(
+                                        child: TextButton(
+                                          onPressed: () => message(context),
+                                          child: const Text(
+                                            "Message",
+                                            style: TextStyle(
+                                              color: Palette.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),

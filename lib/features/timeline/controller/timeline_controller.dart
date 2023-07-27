@@ -231,4 +231,26 @@ class TimelineController extends StateNotifier<bool> {
     final post = _timelineRepository.fetchPostById(postId);
     return post;
   }
+
+  void followPerson({
+    required BuildContext context,
+    required String userId,
+  }) async {
+    state = true;
+    final user = _ref.read(userProvider);
+    final currentUserId = user?.uid ?? "";
+    _timelineRepository.followPerson(userId, currentUserId);
+    state = false;
+  }
+
+  void unfollowPerson({
+    required BuildContext context,
+    required String userId,
+  }) async {
+    state = true;
+    final user = _ref.read(userProvider);
+    final currentUserId = user?.uid ?? "";
+    _timelineRepository.unFollowPerson(userId, currentUserId);
+    state = false;
+  }
 }
