@@ -40,7 +40,6 @@ class TimelineRepository {
     try {
       return right(_posts.doc(post.id).delete());
       // delete from storage
-
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
@@ -69,7 +68,6 @@ class TimelineRepository {
       return right(_posts.doc(comment.postId).update({
         'commentCount': FieldValue.increment(-1),
       }));
-      
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
@@ -100,10 +98,13 @@ class TimelineRepository {
         'downvotes': FieldValue.arrayRemove([userId]),
       });
     } else {
-      return await _comments.doc(comment.id).update({
+       await _comments.doc(comment.id).update({
         'downvotes': FieldValue.arrayUnion([userId]),
       });
     }
+    return _users.doc(comment.userId).update({
+      "score": FieldValue.increment(-1),
+    });
   }
 
   void upvoteComment(CommentModel comment, String userId) async {
@@ -117,10 +118,14 @@ class TimelineRepository {
         'upvotes': FieldValue.arrayRemove([userId]),
       });
     } else {
-      return await _comments.doc(comment.id).update({
+       await _comments.doc(comment.id).update({
         'upvotes': FieldValue.arrayUnion([userId]),
       });
     }
+   return _users.doc(comment.userId).update({
+      "score": FieldValue.increment(1),
+    });
+    
   }
 
   Stream<List<PostModel>> fetchPosts() {

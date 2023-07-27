@@ -47,7 +47,7 @@ class Comment extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Ali",
+                    comment.username,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,

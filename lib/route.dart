@@ -19,10 +19,13 @@ import 'models/user_model.dart';
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorTimelineKey =
     GlobalKey<NavigatorState>(debugLabel: 'timeline');
+final _shellNavigatorLeaderboardKey =
+    GlobalKey<NavigatorState>(debugLabel: 'leaderboard');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _shellNavigatorContactKey =
     GlobalKey<NavigatorState>(debugLabel: 'contact');
+    
 
 final goRouteProvider = Provider<GoRouter>((ref) {
   User? m = FirebaseAuth.instance.currentUser;
