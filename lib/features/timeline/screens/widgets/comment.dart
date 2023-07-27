@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/models/comment_model.dart';
 
 import '../../../../core/utils.dart';
@@ -18,8 +19,12 @@ class Comment extends ConsumerWidget {
     ref
         .watch(timelineControllerProvider.notifier)
         .deleteComment(context: context, comment: comment);
-    
+
     // ref.refresh(postByIdProvider(comment.postId));
+  }
+
+  void navigateToProfilePage(BuildContext context) {
+    context.go("/timeline/profile/${comment.userId}");
   }
 
   @override
@@ -36,9 +41,12 @@ class Comment extends ConsumerWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundImage: AssetImage("assets/images/profile.jpg"),
+              InkWell(
+                onTap: () => navigateToProfilePage(context),
+                child: const CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                ),
               ),
               const SizedBox(
                 width: 10,

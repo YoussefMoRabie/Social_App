@@ -22,7 +22,7 @@ class ProfilePage extends ConsumerWidget {
           child: Column(
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   context.go('/profile/settings');
                 },
                 child: Stack(
@@ -58,76 +58,28 @@ class ProfilePage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-               Text(user.name,
+              Text(user.name,
                   style: TextStyle(color: Palette.white, fontSize: 28)),
               const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Palette.primary,
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Follow",
-                            style: TextStyle(
-                              color: Palette.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Palette.primary),
-                        ),
-                        child: const Center(
-                          child: Text(
-                            "Message",
-                            style: TextStyle(
-                              color: Palette.primary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Column(
                     children: [
                       ref.watch(postsByUserIdProvider(userId)).when(
-                        data: (data) {
-                          return Text(
-                            data.length.toString(),
-                            style: const TextStyle(
-                              color: Palette.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          );
-                        },
-                        error: (e, s) => Text('$s'),
-                        loading: () => const Loader(),
-                      ),
-
+                            data: (data) {
+                              return Text(
+                                data.length.toString(),
+                                style: const TextStyle(
+                                  color: Palette.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            },
+                            error: (e, s) => Text('$s'),
+                            loading: () => const Loader(),
+                          ),
                       const Text(
                         "Posts",
                         style: TextStyle(color: Palette.white),
@@ -174,24 +126,24 @@ class ProfilePage extends ConsumerWidget {
                 thickness: 1,
               ),
               const SizedBox(height: 10),
-               Expanded(
-                  child: ref.watch(postsByUserIdProvider(userId)).when(
-                        data: (data) {
-                          return ListView.builder(
-                            itemCount: data.length,
-                            itemBuilder: (context, index) {
-                              return Post(
-                                path: "profile",
-                                outside: true,
-                                post: data[index],
-                              );
-                            },
-                          );
-                        },
-                        error: (e, s) => Text('$s'),
-                        loading: () => const Loader(),
-                      ),
-                ),
+              Expanded(
+                child: ref.watch(postsByUserIdProvider(userId)).when(
+                      data: (data) {
+                        return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            return Post(
+                              path: "profile",
+                              outside: true,
+                              post: data[index],
+                            );
+                          },
+                        );
+                      },
+                      error: (e, s) => Text('$s'),
+                      loading: () => const Loader(),
+                    ),
+              ),
             ],
           ),
         ),

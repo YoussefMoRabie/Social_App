@@ -14,7 +14,6 @@ class RandomProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Scaffold(
       body: ref.watch(getUserDataProvider(id)).when(
             data: (data) {
@@ -55,7 +54,7 @@ class RandomProfilePage extends ConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      const Text("Ali",
+                      Text(data.name,
                           style: TextStyle(color: Palette.white, fontSize: 28)),
                       const SizedBox(height: 20),
                       Padding(
@@ -105,19 +104,25 @@ class RandomProfilePage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
                             children: [
-                              Text(
-                                "0",
-                                style: const TextStyle(
-                                  color: Palette.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              ref.watch(postsByUserIdProvider(data.uid)).when(
+                                    data: (data) {
+                                      return Text(
+                                        data.length.toString(),
+                                        style: const TextStyle(
+                                          color: Palette.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    },
+                                    error: (e, s) => Text('$s'),
+                                    loading: () => const Loader(),
+                                  ),
                               const Text(
                                 "Posts",
                                 style: TextStyle(color: Palette.white),
@@ -127,7 +132,7 @@ class RandomProfilePage extends ConsumerWidget {
                           Column(
                             children: [
                               Text(
-                                "0",
+                                data.followers.length.toString(),
                                 style: const TextStyle(
                                   color: Palette.white,
                                   fontSize: 20,
@@ -143,7 +148,7 @@ class RandomProfilePage extends ConsumerWidget {
                           Column(
                             children: [
                               Text(
-                                "0",
+                                data.following.length.toString(),
                                 style: const TextStyle(
                                   color: Palette.white,
                                   fontSize: 20,

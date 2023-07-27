@@ -29,6 +29,10 @@ class Post extends ConsumerWidget {
     context.go('/$path/post/$uuid');
   }
 
+  void navigateToProfilePage(BuildContext context){
+    context.go("/$path/profile/${post.userId}");
+  }
+
   void pickReaction(BuildContext context, WidgetRef ref) async {
     final res = await pickImage();
     File? image;
@@ -76,9 +80,12 @@ class Post extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                InkWell(
+                  onTap: () => navigateToProfilePage(context),
+                  child: const CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage("assets/images/profile.jpg"),
+                  ),
                 ),
                 const SizedBox(
                   width: 10,

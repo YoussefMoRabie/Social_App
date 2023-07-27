@@ -38,7 +38,9 @@ class PostScreen extends ConsumerWidget {
                                   shrinkWrap: true,
                                   itemCount: comments.length,
                                   itemBuilder: (context, index) {
-                                    return Comment(comment: comments[index]);
+                                    return Comment(
+                                      comment: comments[index],
+                                    );
                                   },
                                 ),
                                 Container(

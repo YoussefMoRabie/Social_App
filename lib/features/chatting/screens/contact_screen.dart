@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../models/user_model.dart';
 import '../../../theme/pallete.dart';
@@ -62,12 +63,17 @@ class _ContactScreenState extends  ConsumerState<ContactScreen>{
                         //     height: 50,
                         //   ),
                         // ),
-                       leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: const Image(
-                            image: AssetImage("assets/images/profile.jpg"),
-                            fit: BoxFit.cover,
-                          )),
+                       leading: InkWell(
+                           onTap: (){
+                            context.go('/contact/profile/${friend['uid']}');
+                           },
+                         child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: const Image(
+                              image: AssetImage("assets/images/profile.jpg"),
+                              fit: BoxFit.cover,
+                            )),
+                       ),
                         title: Text(friend['name'],style: TextStyle(fontSize: 20),),
                         subtitle: Container(
                           child: Text("$lastMsg",style: TextStyle(color: Colors.grey),overflow: TextOverflow.ellipsis,),

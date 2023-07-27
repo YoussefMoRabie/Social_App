@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/core/common/loader.dart';
 import 'package:social_app/theme/pallete.dart';
 
@@ -45,13 +46,28 @@ class LeaderboardScreen extends ConsumerWidget {
                                 horizontal: 10, vertical: 5),
                             width: double.infinity,
                             padding: EdgeInsets.all(10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text((index + 1).toString()),
-                                Text(users[index].name),
-                                Text(users[index].score.toString()),
-                              ],
+                            child: InkWell(
+                              onTap: () {
+                                context.go('/leaderboard/profile/${users[index].uid}');
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    (index + 1).toString(),
+                                  ),
+                                  Text(
+                                    users[index].name,
+                                  ),
+                                  Text(
+                                    users[index].score.toString(),
+                                    style: TextStyle(
+                                        color: Palette.primary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

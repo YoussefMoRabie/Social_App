@@ -29,7 +29,6 @@ final _shellNavigatorContactKey =
     GlobalKey<NavigatorState>(debugLabel: 'contact');
 
 final goRouteProvider = Provider<GoRouter>((ref) {
-
   return GoRouter(
     initialLocation: '/timeline',
     navigatorKey: _rootNavigatorKey,
@@ -45,37 +44,53 @@ final goRouteProvider = Provider<GoRouter>((ref) {
         },
         branches: [
           StatefulShellBranch(
-              navigatorKey: _shellNavigatorTimelineKey,
-              routes: [
-                GoRoute(
-                  path: '/timeline',
-                  pageBuilder: (context, state) =>
-                      NoTransitionPage(child: TimelineScreen()),
-                  routes: [
-                    GoRoute(
-                      path: 'post/:id',
-                      builder: (context, state) {
-                        final id = state.pathParameters['id']!;
-                        return PostScreen(id: id);
-                      },
-                    ),
-                    GoRoute(
-                      path: 'post',
-                      builder: (context, state) {
-                        return SendPostSreen();
-                      },
-                    ),
-                  ],
-                ),
-              ]),
+            navigatorKey: _shellNavigatorTimelineKey,
+            routes: [
+              GoRoute(
+                path: '/timeline',
+                pageBuilder: (context, state) =>
+                    NoTransitionPage(child: TimelineScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'post/:id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return PostScreen(id: id);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'post',
+                    builder: (context, state) {
+                      return SendPostSreen();
+                    },
+                  ),
+                  GoRoute(
+                    path: 'profile/:id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return RandomProfilePage(id: id);
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
           StatefulShellBranch(
             navigatorKey: _shellNavigatorLeaderboardKey,
             routes: [
               GoRoute(
                 path: '/leaderboard',
                 pageBuilder: (context, state) =>
-                    NoTransitionPage(child: LeaderboardScreen()),
-                routes: [],
+                    const NoTransitionPage(child: LeaderboardScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'profile/:id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return RandomProfilePage(id: id);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -83,21 +98,29 @@ final goRouteProvider = Provider<GoRouter>((ref) {
             navigatorKey: _shellNavigatorContactKey,
             routes: [
               GoRoute(
-                  path: '/contact',
-                  builder: (context, state) {
-                    return ContactScreen();
-                  },
-                  routes: [
-                    GoRoute(
-                      path: 'post/:id',
-                      builder: (context, state) {
-                        final id = state.pathParameters['id']!;
-                        return PostScreen(
-                          id: id,
-                        );
-                      },
-                    ),
-                  ]),
+                path: '/contact',
+                builder: (context, state) {
+                  return ContactScreen();
+                },
+                routes: [
+                  GoRoute(
+                    path: 'post/:id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return PostScreen(
+                        id: id,
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'profile/:id',
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return RandomProfilePage(id: id);
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
           StatefulShellBranch(
