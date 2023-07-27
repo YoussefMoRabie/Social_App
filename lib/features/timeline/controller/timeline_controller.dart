@@ -102,6 +102,7 @@ class TimelineController extends StateNotifier<bool> {
                 content: Text(l.message),
               ),
             ), (r) {
+      _storageRepository.deleteAllPostFiles(path: "comments/${post.id}");
       if (!inside) {
         context.pop();
       }
@@ -120,7 +121,7 @@ class TimelineController extends StateNotifier<bool> {
     final commentId = const Uuid().v4();
     final imageRes = await _storageRepository.storeFile(
       path: 'comments/$postId',
-      id: postId,
+      id: commentId,
       file: file,
     );
     final imageUrl = imageRes.fold(
@@ -158,18 +159,23 @@ class TimelineController extends StateNotifier<bool> {
     state = true;
     final res = await _timelineRepository.deleteComment(comment);
     state = false;
+
     res.fold(
-      (l) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l.message),
-        ),
-      ),
-      (r) => ScaffoldMessenger.of(context).showSnackBar(
+        (l) => ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l.message),
+              ),
+            ), (r) async {
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Comment Deleted"),
         ),
-      ),
-    );
+      );
+      _storageRepository.deleteFile(
+        path: 'comments/${comment.postId}',
+        id: comment.id,
+      );
+    });
   }
 
   void likePost({

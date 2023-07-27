@@ -39,6 +39,8 @@ class TimelineRepository {
   FutureVoid deletePost(PostModel post) async {
     try {
       return right(_posts.doc(post.id).delete());
+      // delete from storage
+
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
@@ -67,6 +69,7 @@ class TimelineRepository {
       return right(_posts.doc(comment.postId).update({
         'commentCount': FieldValue.increment(-1),
       }));
+      
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {

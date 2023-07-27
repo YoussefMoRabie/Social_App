@@ -38,4 +38,30 @@ class StorageRepository {
       return left(Failure(e.toString()));
     }
   }
+
+  
+  void deleteFile({required String path, required String id}) async {
+    try {
+      final ref = _firebaseStorage.ref().child(path).child(id);
+      await ref.delete();
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  void deleteAllPostFiles({required String path}) async {
+    try {
+      final ref = _firebaseStorage.ref().child(path);
+      final ListResult result = await ref.listAll();
+      for (final Reference ref in result.items) {
+        await ref.delete();
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+
+  
+
 }
