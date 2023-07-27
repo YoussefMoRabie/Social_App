@@ -46,6 +46,7 @@ class MyApp extends ConsumerWidget {
     });
 
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: Palette.darkModeAppTheme,
       routerConfig: router,
