@@ -14,8 +14,17 @@ class Comment extends ConsumerWidget {
     required this.comment,
   });
 
+  void deleteComment(BuildContext context, WidgetRef ref) async {
+    ref
+        .watch(timelineControllerProvider.notifier)
+        .deleteComment(context: context, comment: comment);
+    
+    // ref.refresh(postByIdProvider(comment.postId));
+  }
+
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userId = ref.read(userProvider)?.uid ?? "";
     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
@@ -56,9 +65,11 @@ class Comment extends ConsumerWidget {
               ),
               const Spacer(),
               IconButton(
-                onPressed: () {},
+                onPressed: comment.userId == userId
+                    ? () => deleteComment(context, ref)
+                    : null,
                 icon: const Icon(
-                  Icons.more_horiz,
+                  Icons.delete_outline_outlined,
                   color: Colors.grey,
                 ),
               ),
@@ -77,12 +88,14 @@ class Comment extends ConsumerWidget {
                   children: [
                     IconButton(
                       onPressed: () {
-                        ref.read(timelineControllerProvider.notifier).upvoteComment(
-                            context: context, comment: comment);
+                        ref
+                            .read(timelineControllerProvider.notifier)
+                            .upvoteComment(context: context, comment: comment);
                       },
-                      icon:  Icon(
+                      icon: Icon(
                         Icons.arrow_upward,
-                        color: comment.upvotes.contains(ref.read(userProvider)!.uid)
+                        color: comment.upvotes
+                                .contains(ref.read(userProvider)!.uid)
                             ? Palette.primary
                             : Colors.grey,
                         size: 40,
@@ -95,15 +108,17 @@ class Comment extends ConsumerWidget {
                         fontSize: 20,
                       ),
                     ),
-
                     IconButton(
                       onPressed: () {
-                        ref.read(timelineControllerProvider.notifier).downvoteComment(
-                            context: context, comment: comment);
+                        ref
+                            .read(timelineControllerProvider.notifier)
+                            .downvoteComment(
+                                context: context, comment: comment);
                       },
-                      icon:  Icon(
+                      icon: Icon(
                         Icons.arrow_downward,
-                        color: comment.downvotes.contains(ref.read(userProvider)!.uid)
+                        color: comment.downvotes
+                                .contains(ref.read(userProvider)!.uid)
                             ? Palette.primary
                             : Colors.grey,
                         size: 40,
