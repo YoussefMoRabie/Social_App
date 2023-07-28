@@ -32,10 +32,8 @@ class Post extends ConsumerWidget {
   void navigateToProfilePage(BuildContext context) {
     if (path == "profile") {
       context.go("/$path/${post.userId}");
-    }
-    else {
+    } else {
       context.go("/$path/profile/${post.userId}");
-
     }
   }
 
@@ -57,9 +55,6 @@ class Post extends ConsumerWidget {
     ref
         .watch(timelineControllerProvider.notifier)
         .likePost(context: context, post: post);
-
-    // ignore: unused_result
-    ref.refresh(postByIdProvider(post.id));
   }
 
   void deletePost(BuildContext context, WidgetRef ref) async {

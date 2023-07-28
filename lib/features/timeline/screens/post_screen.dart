@@ -49,6 +49,7 @@ class PostScreen extends ConsumerWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Post(
+                                        key: UniqueKey(),
                                         path: "timeline",
                                         post: post,
                                       ),

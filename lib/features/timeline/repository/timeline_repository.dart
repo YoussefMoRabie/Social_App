@@ -8,6 +8,7 @@ import 'package:social_app/models/post_model.dart';
 import '../../../core/constants/firebase_constants.dart';
 import '../../../core/types/failure.dart';
 import '../../../core/types/type_defs.dart';
+import '../../../models/user_model.dart';
 
 final timelineRepositoryProvider = Provider<TimelineRepository>((ref) {
   final firestore = ref.watch(firestoreProvider);
@@ -158,11 +159,8 @@ class TimelineRepository {
   }
 
   Stream<PostModel> fetchPostById(String postId) {
-    final doc = _posts.doc(postId).get();
-    return doc.asStream().map((snapshot) {
-      final PostModel p =
-          PostModel.fromMap(snapshot.data() as Map<String, dynamic>);
-      return p;
+    return _posts.doc(postId).snapshots().map((snapshot) {
+      return PostModel.fromMap(snapshot.data() as Map<String, dynamic>);
     });
   }
 
