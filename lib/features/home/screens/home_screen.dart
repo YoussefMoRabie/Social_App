@@ -46,11 +46,13 @@ class HomeScreen extends StatelessWidget {
             selectedIcon: ActiveIcon(
               icon: Icons.leaderboard_outlined,
             ),
-            icon: Icon(Icons.leaderboard_outlined),
+            icon: Icon(
+              Icons.leaderboard_outlined,
+              color: Colors.grey,
+            ),
             label: "Leaderboard",
           ),
-  
-           NavigationDestination(
+          NavigationDestination(
             selectedIcon: ActiveIcon(
               icon: Icons.message,
             ),

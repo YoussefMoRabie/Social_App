@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_app/core/common/loader.dart';
+import 'package:social_app/features/leaderboard/screens/widgets/leaderboard_item.dart';
 import 'package:social_app/theme/pallete.dart';
 
 import '../controller/leaderboard_controller.dart';
@@ -25,7 +26,7 @@ class LeaderboardScreen extends ConsumerWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [Text("Rank"), Text("username"), Text("Score")],
@@ -37,39 +38,8 @@ class LeaderboardScreen extends ConsumerWidget {
                       child: ListView.builder(
                         itemCount: users.length,
                         itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: Palette.primary, width: 1)),
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(10),
-                            child: InkWell(
-                              onTap: () {
-                                context.go('/leaderboard/profile/${users[index].uid}');
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    (index + 1).toString(),
-                                  ),
-                                  Text(
-                                    users[index].name,
-                                  ),
-                                  Text(
-                                    users[index].score.toString(),
-                                    style: const TextStyle(
-                                        color: Palette.primary,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return LeaderBoardItem(
+                              index: index, user: users[index]);
                         },
                       ),
                     );

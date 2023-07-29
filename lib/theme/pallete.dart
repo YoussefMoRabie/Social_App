@@ -10,6 +10,9 @@ class Palette {
   static var darkModeAppTheme = ThemeData.dark().copyWith(
       scaffoldBackgroundColor: background,
       cardColor: surface,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
         backgroundColor: background,
         iconTheme: IconThemeData(

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,8 @@ class ChatScreen extends StatelessWidget {
   final String friendName;
   final String friendImage;
 
-  const ChatScreen({super.key, 
+  const ChatScreen({
+    super.key,
     required this.currentUser,
     required this.friendId,
     required this.friendName,
@@ -27,17 +27,15 @@ class ChatScreen extends StatelessWidget {
         backgroundColor: Palette.surface,
         title: Row(
           mainAxisSize: MainAxisSize.min,
-        
           children: [
-           ClipRRect(
-          
-                          borderRadius: BorderRadius.circular(80),
-                          child: const Image(
-                            width: 30,
-                            height: 30,
-                            image: AssetImage("assets/images/profile.jpg"),
-                            fit: BoxFit.cover,
-                          )),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(80),
+                child: Image(
+                  width: 30,
+                  height: 30,
+                  image: NetworkImage(friendImage),
+                  fit: BoxFit.cover,
+                )),
             const SizedBox(
               width: 10,
             ),
