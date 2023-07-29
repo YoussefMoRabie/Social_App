@@ -6,17 +6,37 @@ import 'package:social_app/features/auth/controller/auth_controller.dart';
 import 'package:social_app/features/timeline/controller/timeline_controller.dart';
 
 import '../../../core/common/loader.dart';
+import '../../../models/user_model.dart';
 import '../../../theme/pallete.dart';
 import '../../timeline/screens/widgets/post.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
+  void logout(WidgetRef ref) {
+    ref.watch(authControllerProvider.notifier).logout();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider)!;
+    final user = ref.watch(userProvider) ?? UserModel.empty();
     final userId = user.uid;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        scrolledUnderElevation: 0.0,
+        actions: [
+          IconButton(
+            onPressed: () => logout(ref),
+            icon: const Icon(
+              LineAwesomeIcons.alternate_sign_out,
+              size: 40,
+              color: Palette.primary,
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: Column(

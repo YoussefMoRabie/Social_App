@@ -57,6 +57,20 @@ class UserModel {
     };
   }
 
+  factory UserModel.empty() {
+    return UserModel(
+      name: "",
+      profilePic: "",
+      uid: "",
+      score: 0,
+      followers: [],
+      following: [],
+      validityOfKey: 0,
+      key: "",
+    );
+  }
+
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'] as String,
