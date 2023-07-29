@@ -1,19 +1,57 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:social_app/core/common/custom_submit_button.dart';
 import 'package:social_app/core/common/custom_text_field.dart';
+import 'package:social_app/features/auth/controller/auth_controller.dart';
+import 'package:social_app/models/user_model.dart';
 
+import '../../../core/utils.dart';
 import '../../../theme/pallete.dart';
 
-class UpdateProfileScreen extends StatefulWidget {
+class UpdateProfileScreen extends ConsumerStatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+  ConsumerState<UpdateProfileScreen> createState() =>
+      _UpdateProfileScreenState();
 }
 
-class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
   final _username = TextEditingController();
+  UserModel? userData;
+  File? image;
+
+  @override
+  void initState() {
+    userData = ref.read(userProvider);
+    _username.text = userData!.name;
+    super.initState();
+  }
+
+  void updateProfile(BuildContext context, WidgetRef ref) async {
+    final res = await pickImage();
+    File? image;
+    if (res == null) {
+      return;
+    }
+    image = File(res.files.first.path!);
+    ref.read(authControllerProvider.notifier).updateProfile(
+          currentUser: userData!,
+          image: image,
+        );
+    // ignore: use_build_context_synchronously
+  }
+
+  void submitEdit() {
+    ref.read(authControllerProvider.notifier).updateProfile(
+          currentUser: userData!,
+          username: _username.text.trim(),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,24 +68,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 Stack(
                   children: [
                     SizedBox(
-                        width: 120,
-                        height: 120,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Container(
-                            color: Palette.surface,
-                            child: const Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                              size: 60,
-                            ),
-                          ),
-                        )
-                        // child: const Image(
-                        //   image: AssetImage("assets/images/profile.jpg"),
-                        //   fit: BoxFit.cover,
-                        // )),
+                      width: 120,
+                      height: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Container(
+                          color: Palette.surface,
+                          child: userData!.profilePic == ""
+                              ? const Icon(
+                                  Icons.person,
+                                  color: Colors.grey,
+                                  size: 60,
+                                )
+                              : Image(
+                                  image: NetworkImage(userData!.profilePic),
+                                  fit: BoxFit.cover,
+                                ),
                         ),
+                      ),
+                    ),
                     Positioned(
                       bottom: 0,
                       right: 0,
@@ -58,7 +97,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             borderRadius: BorderRadius.circular(100),
                             color: Palette.primary),
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () => updateProfile(context, ref),
                             icon: const Icon(LineAwesomeIcons.camera, size: 20),
                             color: Colors.black),
                       ),
@@ -80,16 +119,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         icon: Icons.person,
                         keyboardType: TextInputType.name,
                       ),
-                      const SizedBox(height: 30),
-                      CustomTextField(
-                        controller: _username,
-                        validator: (p0) {
-                          return null;
-                        },
-                        hintText: "Phone Number",
-                        icon: Icons.phone,
-                        keyboardType: TextInputType.name,
-                      ),
+
                       const SizedBox(height: 30),
                       // -- Form Submit Button
                       CustomSubmitButton(
@@ -97,7 +127,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           "Update Profile",
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () {},
+                        onPressed: submitEdit,
                       ),
                     ],
                   ),

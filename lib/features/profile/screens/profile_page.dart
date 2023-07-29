@@ -43,7 +43,7 @@ class ProfilePage extends ConsumerWidget {
             children: [
               InkWell(
                 onTap: () {
-                  context.go('/profile/settings');
+                  context.go('/profile/update');
                 },
                 child: Stack(
                   children: [
@@ -52,10 +52,16 @@ class ProfilePage extends ConsumerWidget {
                       height: 120,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: const Image(
-                            image: AssetImage("assets/images/profile.jpg"),
-                            fit: BoxFit.cover,
-                          )),
+                          child: user.profilePic == ""
+                              ? const Image(
+                                  image:
+                                      AssetImage("assets/images/profile.jpg"),
+                                  fit: BoxFit.cover,
+                                )
+                              : Image(
+                                  image: NetworkImage(user.profilePic),
+                                  fit: BoxFit.cover,
+                                )),
                     ),
                     Positioned(
                       bottom: 0,

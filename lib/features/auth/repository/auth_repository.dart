@@ -45,7 +45,11 @@ class AuthRepository {
 
   //sign up
   FutureEither<UserModel> signUp(
-      String name , String email, String password, String key,) async {
+    String name,
+    String email,
+    String password,
+    String key,
+  ) async {
     try {
       //First: look for a friend who has this key
       final foundUser =
@@ -74,6 +78,15 @@ class AuthRepository {
         throw KeyException(
             "This key is not valid, try to ask a friend to give you a key");
       }
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid updateProfile(UserModel userUpdated) async {
+    try {
+      return right(
+          await _users.doc(userUpdated.uid).update(userUpdated.toMap()));
     } catch (e) {
       return left(Failure(e.toString()));
     }

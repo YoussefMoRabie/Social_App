@@ -130,12 +130,6 @@ final goRouteProvider = Provider<GoRouter>((ref) {
                   },
                   routes: [
                     GoRoute(
-                      path: 'settings',
-                      builder: (context, state) {
-                        return const SettingsScreen();
-                      },
-                    ),
-                    GoRoute(
                       path: 'update',
                       builder: (context, state) {
                         return const UpdateProfileScreen();
