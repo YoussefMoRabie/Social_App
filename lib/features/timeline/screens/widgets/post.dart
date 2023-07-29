@@ -85,7 +85,7 @@ class Post extends ConsumerWidget {
                   onTap: () => navigateToProfilePage(context),
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundImage: NetworkImage(postOwner!.profilePic),
+                    backgroundImage: NetworkImage(postOwner?.profilePic ?? ""),
                   ),
                 ),
                 const SizedBox(

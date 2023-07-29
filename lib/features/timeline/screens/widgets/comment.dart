@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:social_app/core/constants/assets_constants.dart';
 import 'package:social_app/models/comment_model.dart';
 
 import '../../../../core/utils.dart';
+import '../../../../models/user_model.dart';
 import '../../../../theme/pallete.dart';
 import '../../../auth/controller/auth_controller.dart';
 import '../../controller/timeline_controller.dart';
@@ -30,6 +32,8 @@ class Comment extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = ref.read(userProvider)?.uid ?? "";
+    final user = ref.watch(getUserDataProvider(comment.userId)).asData?.value ?? UserModel.empty();
+
     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
@@ -43,9 +47,9 @@ class Comment extends ConsumerWidget {
             children: [
               InkWell(
                 onTap: () => navigateToProfilePage(context),
-                child: const CircleAvatar(
+                child:  CircleAvatar(
                   radius: 25,
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                  backgroundImage: NetworkImage(user.profilePic),
                 ),
               ),
               const SizedBox(
@@ -55,7 +59,7 @@ class Comment extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    comment.username,
+                    user.name,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
