@@ -51,6 +51,24 @@ class AuthRepository {
     String key,
   ) async {
     try {
+      //if there are no users:
+      // UserCredential userCredential = await _firebaseAuth
+      //     .createUserWithEmailAndPassword(email: email, password: password);
+      // UserModel user = UserModel(
+      //   name: name,
+      //   profilePic:
+      //       "https://firebasestorage.googleapis.com/v0/b/chatt-a11a8.appspot.com/o/users%2Fdefault-image.png?alt=media&token=2a5597cf-a117-4da7-8acc-26632fa815c2",
+      //   uid: userCredential.user!.uid,
+      //   followers: [],
+      //   following: [],
+      //   key: uuid.v1(),
+      //   validityOfKey: 2,
+      //   score: 0,
+      // );
+      // await _users.doc(userCredential.user!.uid).set(user.toMap());
+      // return right(user);
+
+      //uncomment the code bellow if users are registered
       //First: look for a friend who has this key
       final foundUser =
           await _users.where("key", isEqualTo: key).limit(1).get();

@@ -83,9 +83,9 @@ class Post extends ConsumerWidget {
               children: [
                 InkWell(
                   onTap: () => navigateToProfilePage(context),
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     radius: 25,
-                    backgroundImage: AssetImage("assets/images/profile.jpg"),
+                    backgroundImage: NetworkImage(postOwner!.profilePic),
                   ),
                 ),
                 const SizedBox(
