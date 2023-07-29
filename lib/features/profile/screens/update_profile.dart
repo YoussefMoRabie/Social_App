@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:social_app/core/common/custom_submit_button.dart';
 import 'package:social_app/core/common/custom_text_field.dart';
@@ -31,7 +32,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
     super.initState();
   }
 
-  void updateProfile(BuildContext context, WidgetRef ref) async {
+  void updateImg(BuildContext context, WidgetRef ref) async {
     final res = await pickImage();
     File? image;
     if (res == null) {
@@ -53,6 +54,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
           _username.text.trim(),
           context,
         );
+    context.pop();
   }
 
   @override
@@ -100,7 +102,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
                             borderRadius: BorderRadius.circular(100),
                             color: Palette.primary),
                         child: IconButton(
-                            onPressed: () => updateProfile(context, ref),
+                            onPressed: () => updateImg(context, ref),
                             icon: const Icon(LineAwesomeIcons.camera, size: 20),
                             color: Colors.black),
                       ),
