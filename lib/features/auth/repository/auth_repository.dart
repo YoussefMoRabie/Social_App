@@ -5,7 +5,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:social_app/core/common/firebase_constants.dart';
 import 'package:social_app/core/core.dart';
 import 'package:social_app/core/providers/firebase_providers.dart';
-import 'package:social_app/core/types/key_exception.dart';
+import 'package:social_app/core/types/username_exception.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -78,23 +78,30 @@ class AuthRepository {
         friendData =
             friendData.copyWith(validityOfKey: friendData.validityOfKey - 1);
         _users.doc(friendData.uid).update(friendData.toMap());
-        UserCredential userCredential = await _firebaseAuth
-            .createUserWithEmailAndPassword(email: email, password: password);
-        UserModel user = UserModel(
-          name: name,
-          profilePic:
-              "https://firebasestorage.googleapis.com/v0/b/chatt-a11a8.appspot.com/o/users%2Fdefault-image.png?alt=media&token=2a5597cf-a117-4da7-8acc-26632fa815c2",
-          uid: userCredential.user!.uid,
-          followers: [],
-          following: [],
-          key: uuid.v1(),
-          validityOfKey: 2,
-          score: 0,
-        );
-        await _users.doc(userCredential.user!.uid).set(user.toMap());
-        return right(user);
+        //check if user does not exist
+        final haveSameUsername =
+            await _users.where("name", isEqualTo: name).limit(1).get();
+        if (haveSameUsername.docs.isEmpty) {
+          UserCredential userCredential = await _firebaseAuth
+              .createUserWithEmailAndPassword(email: email, password: password);
+          UserModel user = UserModel(
+            name: name,
+            profilePic:
+                "https://firebasestorage.googleapis.com/v0/b/chatt-a11a8.appspot.com/o/users%2Fdefault-image.png?alt=media&token=2a5597cf-a117-4da7-8acc-26632fa815c2",
+            uid: "uid",
+            followers: [],
+            following: [],
+            key: uuid.v1(),
+            validityOfKey: 2,
+            score: 0,
+          );
+          await _users.doc(userCredential.user!.uid).set(user.toMap());
+          return right(user);
+        } else {
+          throw ErrorException("Username is already in use");
+        }
       } else {
-        throw KeyException(
+        throw ErrorException(
             "This key is not valid, try to ask a friend to give you a key");
       }
     } catch (e) {
