@@ -21,7 +21,6 @@ class RandomProfilePage extends ConsumerWidget {
           .read(timelineControllerProvider.notifier)
           .unfollowPerson(context: context, userId: user.uid);
     } else {
-
       ref
           .read(timelineControllerProvider.notifier)
           .followPerson(context: context, userId: user.uid);
@@ -36,6 +35,7 @@ class RandomProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUserId = ref.watch(userProvider)?.uid ?? "";
     return Scaffold(
+      appBar: AppBar(),
       body: ref.watch(getUserDataProvider(id)).when(
             data: (data) {
               return SafeArea(
@@ -49,9 +49,8 @@ class RandomProfilePage extends ConsumerWidget {
                             height: 120,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
-                                child: const Image(
-                                  image:
-                                      AssetImage("assets/images/profile.jpg"),
+                                child: Image(
+                                  image: NetworkImage(data.profilePic),
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -102,8 +101,9 @@ class RandomProfilePage extends ConsumerWidget {
                                             currentUserId,
                                             data,
                                           ),
-                                          child:  Text(
-                                            data.followers.contains(currentUserId)
+                                          child: Text(
+                                            data.followers
+                                                    .contains(currentUserId)
                                                 ? "Unfollow"
                                                 : "Follow",
                                             style: TextStyle(
