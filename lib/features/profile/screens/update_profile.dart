@@ -39,6 +39,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
     }
     image = File(res.files.first.path!);
     ref.read(authControllerProvider.notifier).updateProfile(
+          context: context,
           currentUser: userData!,
           image: image,
         );
@@ -47,6 +48,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
 
   void submitEdit() {
     ref.read(authControllerProvider.notifier).updateProfile(
+          context: context,
           currentUser: userData!,
           username: _username.text.trim(),
         );

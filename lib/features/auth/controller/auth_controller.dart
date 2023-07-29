@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/core/providers/storage_repository_provider.dart';
 import 'package:social_app/features/auth/repository/auth_repository.dart';
 import 'package:social_app/models/user_model.dart';
@@ -66,7 +67,7 @@ class AuthController extends StateNotifier<bool> {
   }
 
   void updateProfile(
-      {required UserModel currentUser, String? username, File? image}) async {
+      {required UserModel currentUser, String? username, File? image, required BuildContext context}) async {
     UserModel? user;
     if (image != null) {
       final imageUpload = await _storageRepository.storeFile(
@@ -99,7 +100,12 @@ class AuthController extends StateNotifier<bool> {
           validityOfKey: currentUser.validityOfKey,
           key: currentUser.key);
     }
-    _authRepository.updateProfile(user);
+    final res = await _authRepository.updateProfile(user);
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) => context.pop(),
+    );
+    _ref.read(userProvider.notifier).state = user;
   }
 
   void logout() {
