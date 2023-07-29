@@ -1,3 +1,3 @@
 class AssetsConstants {
-  static final defaultImage = "assets/images/profile.jpg";
+  static const defaultImage = "assets/images/profile.jpg";
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:social_app/features/auth/controller/auth_controller.dart';
-import 'package:social_app/features/chatting/controller/chat_controller.dart';
 
 class Chat extends ConsumerStatefulWidget {
   final String recieverId;
@@ -15,7 +13,7 @@ class Chat extends ConsumerStatefulWidget {
 class _ChatState extends ConsumerState<Chat> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(children: [
         //messages==============================================
         // messageList(),

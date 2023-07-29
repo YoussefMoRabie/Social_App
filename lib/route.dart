@@ -45,7 +45,7 @@ final goRouteProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/timeline',
                 pageBuilder: (context, state) =>
-                    NoTransitionPage(child: TimelineScreen()),
+                    const NoTransitionPage(child: TimelineScreen()),
                 routes: [
                   GoRoute(
                     path: 'post/:id',

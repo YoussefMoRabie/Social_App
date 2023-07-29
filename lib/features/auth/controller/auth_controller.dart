@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router/go_router.dart';
 import 'package:social_app/core/providers/storage_repository_provider.dart';
 import 'package:social_app/features/auth/repository/auth_repository.dart';
 import 'package:social_app/models/user_model.dart';
@@ -72,6 +71,7 @@ class AuthController extends StateNotifier<bool> {
     String username,
     BuildContext context,
   ) async {
+    state = true;
     final user = UserModel(
         name: username,
         profilePic: currentUser.profilePic,
@@ -83,10 +83,16 @@ class AuthController extends StateNotifier<bool> {
         key: currentUser.key);
 
     final data = await _authRepository.updateUsername(user);
-    data.fold((l) => showSnackBar(context, l.message), (r) => {});
+    state = false;
+    data.fold((l) => showSnackBar(context, l.message), (r) {
+      _ref.read(userProvider.notifier).update((state) => user);
+
+      context.pop();
+    });
   }
 
   void updateImg(File? img, BuildContext context, UserModel currentUser) async {
+    state = true;
     if (img != null) {
       final imageUpload = await _storageRepository.storeFile(
         path: 'users/${currentUser.uid}',
@@ -98,17 +104,22 @@ class AuthController extends StateNotifier<bool> {
         (r) => r,
       );
       final user = UserModel(
-          name: currentUser.name,
-          profilePic: imageUrl,
-          uid: currentUser.uid,
-          score: currentUser.score,
-          followers: currentUser.followers,
-          following: currentUser.following,
-          validityOfKey: currentUser.validityOfKey,
-          key: currentUser.key);
+        name: currentUser.name,
+        profilePic: imageUrl,
+        uid: currentUser.uid,
+        score: currentUser.score,
+        followers: currentUser.followers,
+        following: currentUser.following,
+        validityOfKey: currentUser.validityOfKey,
+        key: currentUser.key,
+      );
 
       final data = await _authRepository.updateImg(user);
-      data.fold((l) => showSnackBar(context, l.message), (r) => {});
+      state = false;
+      data.fold((l) => showSnackBar(context, l.message), (r) {
+        _ref.read(userProvider.notifier).update((state) => user);
+        context.pop();
+      });
     }
   }
 

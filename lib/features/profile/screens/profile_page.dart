@@ -54,20 +54,21 @@ class ProfilePage extends ConsumerWidget {
                               width: 120,
                               height: 120,
                               child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image(
-                                    image: NetworkImage(data.profilePic),
-                                    fit: BoxFit.cover,
-                                    loadingBuilder:
-                                        (context, child, loadingProgress) {
-                                      if (loadingProgress == null) {
-                                        return child;
-                                      } else {
-                                        return Image.asset(
-                                            AssetsConstants.defaultImage);
-                                      }
-                                    },
-                                  )),
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image(
+                                  image: NetworkImage(data.profilePic),
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Image.asset(
+                                          AssetsConstants.defaultImage);
+                                    }
+                                  },
+                                ),
+                              ),
                             ),
                             Positioned(
                               bottom: 0,
@@ -90,7 +91,7 @@ class ProfilePage extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(user.name,
+                      Text(data.name,
                           style: const TextStyle(
                               color: Palette.white, fontSize: 28)),
                       const SizedBox(height: 20),

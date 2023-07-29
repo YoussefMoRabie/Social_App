@@ -116,7 +116,7 @@ class RandomProfilePage extends ConsumerWidget {
                                                     .contains(currentUserId)
                                                 ? "Unfollow"
                                                 : "Follow",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Palette.white,
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,

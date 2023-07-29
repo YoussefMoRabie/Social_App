@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../theme/pallete.dart';
 import '../../auth/controller/auth_controller.dart';
-import 'Search_screen..dart';
+import 'search_screen..dart';
 import 'chatting_screen.dart';
 
 class ContactScreen extends ConsumerStatefulWidget {

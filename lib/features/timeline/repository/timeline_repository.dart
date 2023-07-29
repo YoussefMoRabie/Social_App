@@ -8,7 +8,6 @@ import 'package:social_app/models/post_model.dart';
 import '../../../core/constants/firebase_constants.dart';
 import '../../../core/types/failure.dart';
 import '../../../core/types/type_defs.dart';
-import '../../../models/user_model.dart';
 
 final timelineRepositoryProvider = Provider<TimelineRepository>((ref) {
   final firestore = ref.watch(firestoreProvider);

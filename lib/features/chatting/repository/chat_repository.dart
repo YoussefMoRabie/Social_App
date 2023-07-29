@@ -21,20 +21,20 @@ class ChatRpository {
 
   //SEND MESSAGE
   Future<void> sendMessage(String recieverId, String messageText) async {
-    final _currentUser = _ref.watch(userProvider.notifier).state!;
+    final currentUser = _ref.watch(userProvider.notifier).state!;
     //current user id
     final Timestamp timestamp = Timestamp.now();
     //create message
     final message = Message(
-      senderId: _currentUser.uid,
-      senderName: _currentUser.name,
+      senderId: currentUser.uid,
+      senderName: currentUser.name,
       recieverId: recieverId,
       message: messageText,
       timestamp: timestamp,
     );
 
     //create room id
-    final ids = [recieverId, _currentUser.uid];
+    final ids = [recieverId, currentUser.uid];
     ids.sort();
     String roomId = ids.join("_");
 
