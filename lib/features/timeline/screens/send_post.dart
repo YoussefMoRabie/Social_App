@@ -27,7 +27,7 @@ class SendPostSreen extends ConsumerWidget {
             ),
           ],
         ),
-        body:  Padding(
+        body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
             controller: _textEditingController,
@@ -39,6 +39,7 @@ class SendPostSreen extends ConsumerWidget {
               hintStyle: TextStyle(color: Colors.grey, fontSize: 25),
               border: InputBorder.none,
             ),
+            maxLength: 200,
           ),
         ));
   }
