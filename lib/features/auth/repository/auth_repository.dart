@@ -109,7 +109,24 @@ class AuthRepository {
     }
   }
 
-  FutureVoid updateProfile(UserModel userUpdated) async {
+  FutureVoid updateUsername(UserModel userUpdated) async {
+    try {
+      final haveSameUsername = await _users
+          .where("name", isEqualTo: userUpdated.name)
+          .limit(1)
+          .get();
+      if (haveSameUsername.docs.isEmpty) {
+        return right(
+            await _users.doc(userUpdated.uid).update(userUpdated.toMap()));
+      } else {
+        throw ErrorException("Username is already in use");
+      }
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
+
+  FutureVoid updateImg(UserModel userUpdated) async {
     try {
       return right(
           await _users.doc(userUpdated.uid).update(userUpdated.toMap()));

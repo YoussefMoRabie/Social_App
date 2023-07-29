@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/core/providers/storage_repository_provider.dart';
 import 'package:social_app/features/auth/repository/auth_repository.dart';
 import 'package:social_app/models/user_model.dart';
@@ -65,22 +66,45 @@ class AuthController extends StateNotifier<bool> {
     state = false;
   }
 
+<<<<<<< HEAD
+  void updateUsername(
+    UserModel currentUser,
+    String username,
+    BuildContext context,
+  ) async {
+    final user = UserModel(
+        name: username,
+        profilePic: currentUser.profilePic,
+        uid: currentUser.uid,
+        score: currentUser.score,
+        followers: currentUser.followers,
+        following: currentUser.following,
+        validityOfKey: currentUser.validityOfKey,
+        key: currentUser.key);
+
+    final data = await _authRepository.updateUsername(user);
+    data.fold((l) => showSnackBar(context, l.message), (r) => {});
+  }
+
+  void updateImg(File? img, BuildContext context, UserModel currentUser) async {
+    if (img != null) {
+=======
   void updateProfile(
-      {required UserModel currentUser, String? username, File? image}) async {
+      {required UserModel currentUser, String? username, File? image, required BuildContext context}) async {
     UserModel? user;
     if (image != null) {
+>>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
       final imageUpload = await _storageRepository.storeFile(
         path: 'users/${currentUser.uid}',
         id: const Uuid().v4(),
-        file: image,
+        file: img,
       );
       final imageUrl = imageUpload.fold(
         (l) => "",
         (r) => r,
       );
-      print(imageUrl);
-      user = UserModel(
-          name: username ?? currentUser.name,
+      final user = UserModel(
+          name: currentUser.name,
           profilePic: imageUrl,
           uid: currentUser.uid,
           score: currentUser.score,
@@ -88,18 +112,19 @@ class AuthController extends StateNotifier<bool> {
           following: currentUser.following,
           validityOfKey: currentUser.validityOfKey,
           key: currentUser.key);
-    } else {
-      user = UserModel(
-          name: username ?? currentUser.name,
-          profilePic: "",
-          uid: currentUser.uid,
-          score: currentUser.score,
-          followers: currentUser.followers,
-          following: currentUser.following,
-          validityOfKey: currentUser.validityOfKey,
-          key: currentUser.key);
+
+      final data = await _authRepository.updateImg(user);
+      data.fold((l) => showSnackBar(context, l.message), (r) => {});
     }
-    _authRepository.updateProfile(user);
+<<<<<<< HEAD
+=======
+    final res = await _authRepository.updateProfile(user);
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) => context.pop(),
+    );
+    _ref.read(userProvider.notifier).state = user;
+>>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
   }
 
   void logout() {
