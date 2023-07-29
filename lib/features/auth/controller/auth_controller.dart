@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:social_app/core/providers/storage_repository_provider.dart';
 import 'package:social_app/features/auth/repository/auth_repository.dart';
 import 'package:social_app/models/user_model.dart';
@@ -116,15 +117,7 @@ class AuthController extends StateNotifier<bool> {
       final data = await _authRepository.updateImg(user);
       data.fold((l) => showSnackBar(context, l.message), (r) => {});
     }
-<<<<<<< HEAD
-=======
-    final res = await _authRepository.updateProfile(user);
-    res.fold(
-      (l) => showSnackBar(context, l.message),
-      (r) => context.pop(),
-    );
-    _ref.read(userProvider.notifier).state = user;
->>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
+    _authRepository.updateProfile(user);
   }
 
   void logout() {
