@@ -88,10 +88,10 @@ class AuthRepository {
             name: name,
             profilePic:
                 "https://firebasestorage.googleapis.com/v0/b/chatt-a11a8.appspot.com/o/users%2Fdefault-image.png?alt=media&token=2a5597cf-a117-4da7-8acc-26632fa815c2",
-            uid: "uid",
+            uid: userCredential.user!.uid,
             followers: [],
             following: [],
-            key: uuid.v1(),
+            key: uuid.v4(),
             validityOfKey: 2,
             score: 0,
           );
