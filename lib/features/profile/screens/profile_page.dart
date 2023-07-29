@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:social_app/core/constants/assets_constants.dart';
 import 'package:social_app/features/auth/controller/auth_controller.dart';
 import 'package:social_app/features/timeline/controller/timeline_controller.dart';
 
@@ -39,7 +40,6 @@ class ProfilePage extends ConsumerWidget {
       ),
       body: ref.watch(getUserDataProvider(userId)).when(
             data: (data) {
-              print(data);
               return SafeArea(
                 child: Center(
                   child: Column(
@@ -55,15 +55,19 @@ class ProfilePage extends ConsumerWidget {
                               height: 120,
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(100),
-                                  child: user.profilePic == ""
-                                      ?  Image(
-                                          image: AssetImage(data.profilePic),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image(
-                                          image: NetworkImage(data.profilePic),
-                                          fit: BoxFit.cover,
-                                        )),
+                                  child: Image(
+                                    image: NetworkImage(data.profilePic),
+                                    fit: BoxFit.cover,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return Image.asset(
+                                            AssetsConstants.defaultImage);
+                                      }
+                                    },
+                                  )),
                             ),
                             Positioned(
                               bottom: 0,

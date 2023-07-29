@@ -7,6 +7,7 @@ import 'package:social_app/features/timeline/controller/timeline_controller.dart
 import 'package:social_app/models/user_model.dart';
 
 import '../../../core/common/loader.dart';
+import '../../../core/constants/assets_constants.dart';
 import '../../../theme/pallete.dart';
 import '../../timeline/screens/widgets/post.dart';
 
@@ -51,6 +52,15 @@ class RandomProfilePage extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image(
                                   image: NetworkImage(data.profilePic),
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return Image.asset(
+                                          AssetsConstants.defaultImage);
+                                    }
+                                  },
                                   fit: BoxFit.cover,
                                 )),
                           ),

@@ -38,34 +38,20 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
       return;
     }
     image = File(res.files.first.path!);
-<<<<<<< HEAD
     // ignore: use_build_context_synchronously
     ref.read(authControllerProvider.notifier).updateImg(
           image,
           context,
           userData!,
-=======
-    ref.read(authControllerProvider.notifier).updateProfile(
-          context: context,
-          currentUser: userData!,
-          image: image,
->>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
         );
     // ignore: use_build_context_synchronously
   }
 
   void submitEdit() {
-<<<<<<< HEAD
     ref.read(authControllerProvider.notifier).updateUsername(
           userData!,
           _username.text.trim(),
           context,
-=======
-    ref.read(authControllerProvider.notifier).updateProfile(
-          context: context,
-          currentUser: userData!,
-          username: _username.text.trim(),
->>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
         );
   }
 

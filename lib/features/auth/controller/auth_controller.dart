@@ -67,7 +67,6 @@ class AuthController extends StateNotifier<bool> {
     state = false;
   }
 
-<<<<<<< HEAD
   void updateUsername(
     UserModel currentUser,
     String username,
@@ -89,12 +88,6 @@ class AuthController extends StateNotifier<bool> {
 
   void updateImg(File? img, BuildContext context, UserModel currentUser) async {
     if (img != null) {
-=======
-  void updateProfile(
-      {required UserModel currentUser, String? username, File? image, required BuildContext context}) async {
-    UserModel? user;
-    if (image != null) {
->>>>>>> e8a515138184b67d8954674a762c7bb0e87ca6d3
       final imageUpload = await _storageRepository.storeFile(
         path: 'users/${currentUser.uid}',
         id: const Uuid().v4(),
@@ -117,7 +110,6 @@ class AuthController extends StateNotifier<bool> {
       final data = await _authRepository.updateImg(user);
       data.fold((l) => showSnackBar(context, l.message), (r) => {});
     }
-    _authRepository.updateProfile(user);
   }
 
   void logout() {
