@@ -56,17 +56,9 @@ class ProfilePage extends ConsumerWidget {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
                                 child: Image(
-                                  image: NetworkImage(data.profilePic),
+                                  image: NetworkImage(data.profilePic ??
+                                      AssetsConstants.defaultImage),
                                   fit: BoxFit.cover,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    } else {
-                                      return Image.asset(
-                                          AssetsConstants.defaultImage);
-                                    }
-                                  },
                                 ),
                               ),
                             ),
